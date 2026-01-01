@@ -1,15 +1,15 @@
 # Beggin
 
-- [ ] Init project
-- [ ] Comtit init
+- [x] Init project
+- [x] Comtit init
 
 ## Models:
 
-- [ ] Project model
+- [x] Project model
 - [ ] Done project model
-- [ ] Image model
+- [x] Image model
 
-- [ ] Run mysql
-- [ ] Create tables
-- [ ] Make first migration:
+- [x] Run mysql
+- [x] Create tables
+- [x] Make first migration:
 - config alembic
