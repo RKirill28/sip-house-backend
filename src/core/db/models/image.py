@@ -1,18 +1,20 @@
 from .base import Base
 
-from sqlalchemy import ForeignKey, UUID, URL, String
+from uuid import UUID
+
+from sqlalchemy import ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 
-class Link(Base):
+class Image(Base):
     __tablename__ = "images"
 
     id: Mapped[UUID] = mapped_column(primary_key=True)
-    url: Mapped[URL]
+    url: Mapped[str] = mapped_column(Text)
     name: Mapped[str] = mapped_column(String(32))
-    description: Mapped[str]
-    is_main_image: bool
-    sort: int
+    description: Mapped[str] = mapped_column(String(255))
+    is_main_image: Mapped[bool]
+    sort: Mapped[int]
 
     project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"))
     project: Mapped["Project"] = relationship(back_populates="images")

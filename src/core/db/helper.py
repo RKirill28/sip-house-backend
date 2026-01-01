@@ -3,8 +3,8 @@ from typing import AsyncGenerator
 from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-from core.conifg import settings
-from core.db.models import Base
+from src.core.conifg import settings
+from src.core.db.models import Base
 
 
 # WARN:if remove this imports then all crashed and tables will not create
