@@ -18,3 +18,5 @@ class Image(Base):
 
     project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"))
     project: Mapped["Project"] = relationship(back_populates="images")
+    done_project_id: Mapped[int] = mapped_column(ForeignKey("done_projects.id"))
+    done_project: Mapped["DoneProject"] = relationship(back_populates="images")

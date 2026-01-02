@@ -13,3 +13,12 @@
 - [x] Create tables
 - [x] Make first migration:
 - config alembic
+
+## App:
+
+- [ ] Create base repository
+- [ ] Create project repo
+- [ ] Create image repo
+
+- [ ] Create project schemas
+- [ ] Create image schemas
