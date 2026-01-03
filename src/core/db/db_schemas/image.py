@@ -1,7 +1,7 @@
 from pydantic import BaseModel, FileUrl, Field
 
 
-class DbImageModel(BaseModel):
+class DBImageModel(BaseModel):
     url: FileUrl
     name: str = Field(max_length=32)
     description: str = Field(max_length=255)

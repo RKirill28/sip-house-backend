@@ -4,9 +4,9 @@ from fastapi import FastAPI
 
 from contextlib import asynccontextmanager
 
-from core.conifg import settings
-from api import main_router
-from core.db.helper import create_all
+from src.core.conifg import settings
+from src.core.db.helper import create_all
+from src.api import main_router
 
 app = FastAPI()
 

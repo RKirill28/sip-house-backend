@@ -6,7 +6,7 @@
 ## Models:
 
 - [x] Project model
-- [ ] Done project model
+- [x] Done project model
 - [x] Image model
 
 - [x] Run mysql
@@ -16,9 +16,14 @@
 
 ## App:
 
-- [ ] Create base repository
-- [ ] Create project repo
-- [ ] Create image repo
+- [x] Create base repository
+- [x] Create project repo
+- [x] Create image repo
 
 - [ ] Create project schemas
 - [ ] Create image schemas
+
+## Api:
+
+- [ ] Create project(upload files):
+- [ ] Create all projects

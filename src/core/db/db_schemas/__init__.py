@@ -1,5 +1,5 @@
-from .image import DbImageModel
-from .project import DbProjectModel
+from .image import DBImageModel
+from .project import DBProjectModel
 
 
-__all__ = ["DbImageModel", "DbProjectModel"]
+__all__ = ["DBImageModel", "DBProjectModel"]

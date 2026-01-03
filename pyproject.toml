@@ -13,6 +13,7 @@ dependencies = [
     "pydantic-settings>=2.12.0",
     "pymysql>=1.1.2",
     "pyright>=1.1.407",
+    "python-multipart>=0.0.21",
     "sqlalchemy>=2.0.45",
     "uvicorn>=0.40.0",
 ]
