@@ -9,7 +9,6 @@ from sqlalchemy.orm import Mapped, relationship, mapped_column
 class DoneProject(Base):
     __tablename__ = "done_projects"
 
-    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     name: Mapped[str] = mapped_column(String(32))
     address: Mapped[str] = mapped_column(String(32))
 
