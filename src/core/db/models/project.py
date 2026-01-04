@@ -1,8 +1,6 @@
 from . import Base
-from uuid import UUID, uuid4
 
-from sqlalchemy import CHAR, String, Text, text
-
+from sqlalchemy import String, Text, DECIMAL
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 
@@ -11,7 +9,7 @@ class Project(Base):
 
     name: Mapped[str] = mapped_column(String(32))
     description: Mapped[str] = mapped_column(String(500))
-    price: Mapped[int]
+    price: Mapped[float] = mapped_column(DECIMAL(10, 2))
     price_description: Mapped[str] = mapped_column(String(255))
     pdf_url: Mapped[str | None] = mapped_column(Text, default=None)
 

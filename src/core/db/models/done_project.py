@@ -1,8 +1,6 @@
 from . import Base
-from uuid import UUID, uuid4
 
-from sqlalchemy import String, Text
-
+from sqlalchemy import String
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 
