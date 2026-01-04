@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from core.schemas.image import ImageModel
+from src.core.schemas import ImageModel
 
 
 class DoneProjectModel(BaseModel):

@@ -1,6 +1,6 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, FileUrl
 
-from src.core.schemas.image import ImageModel
+from src.core.schemas import ImageModel
 
 
 class ProjectModel(BaseModel):
@@ -8,5 +8,5 @@ class ProjectModel(BaseModel):
     desctiption: str = Field(max_length=500)
     price: int
     price_description: str = Field(max_length=255)
-    # pdf file
-    images: list[ImageModel]
+    pdf_url: FileUrl | None = None
+    images: list[ImageModel] | None = None

@@ -1,7 +1,7 @@
-from src.core.db.db_schemas import DBImageModel
-from src.core.db.repositories import BaseRepository
-from src.core.db.models import Image
+from core.db.models import Image
+from core.schemas import ImageModel
+from . import BaseRepository
 
 
-class ImageRepository(BaseRepository[Image, DBImageModel]):
+class ImageRepository(BaseRepository[Image, ImageModel]):
     model = Image
