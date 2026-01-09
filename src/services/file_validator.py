@@ -2,7 +2,6 @@ from pathlib import Path
 from typing import BinaryIO, override
 from PIL import Image
 
-from fastapi import UploadFile
 import magic
 
 
