@@ -1,8 +1,8 @@
-"""added default
+"""changed default value in done_project_id foreign key
 
-Revision ID: db69f5b31705
-Revises: eb9f39499f2c
-Create Date: 2026-01-05 15:10:38.161790
+Revision ID: 89a091305c24
+Revises: 53e2e8c694c3
+Create Date: 2026-01-08 02:31:21.105624
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'db69f5b31705'
-down_revision: Union[str, Sequence[str], None] = 'eb9f39499f2c'
+revision: str = '89a091305c24'
+down_revision: Union[str, Sequence[str], None] = '53e2e8c694c3'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
