@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import ClassVar
 
 from pydantic import BaseModel, MySQLDsn
@@ -38,6 +39,8 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     api: ApiPrefixConfig = ApiPrefixConfig()
     db: DatabaseConfig
+    BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
+    UPLOADS_BASE_DIR: Path = BASE_DIR / "uploads"
 
 
 settings = Settings()
