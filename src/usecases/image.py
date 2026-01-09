@@ -23,7 +23,7 @@ class CreateImage:
             _file=image_file.file,
         )
 
-        filename = await self.saver.save(create_image_form.project_id, image_file)
+        file_path = await self.saver.save(create_image_form.project_id, image_file)
         create_image = CreateImageInDBModel(
             project_id=create_image_form.project_id,
             name=create_image_form.name,
@@ -31,7 +31,7 @@ class CreateImage:
             main_image=create_image_form.main_image,
             sort=create_image_form.sort,
             done_project_id=create_image_form.done_project_id,
-            url=f"/uploads/{create_image_form.project_id}/{filename}",
+            url=file_path,
         )
 
         await self.image_repo.create(create_image)
