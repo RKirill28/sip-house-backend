@@ -10,7 +10,7 @@ class FileValidationError(Exception):
     pass
 
 
-class ValidationFileImageError(FileValidationError):
+class ImageValidationError(FileValidationError):
     """Ошибка валидации картинки"""
 
 
@@ -73,7 +73,7 @@ class ImageFileValidatorService(FileValidatorService):
 
     ALLOW_FILE_SUFFIXES = [".png", ".jpg", ".jpeg"]
     ALLOW_FILE_CONTENT_TYPE = ["image/png", "image/jpeg"]
-    VALIDATOR_EXCEPTION = ValidationFileImageError
+    VALIDATOR_EXCEPTION = ImageValidationError
 
     def _validate_for_image(self, file_stream: BinaryIO) -> None:
         try:
