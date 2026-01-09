@@ -1,8 +1,10 @@
 from typing import Type, Sequence
+from uuid import UUID
 from pydantic import BaseModel
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from src.core.db.models import Base
 
@@ -19,7 +21,7 @@ class BaseRepository[T: Base, P: BaseModel]:
         await self.session.flush()
         return new
 
-    async def get_by_id(self, id: int) -> T | None:
+    async def get_by_id(self, id: UUID) -> T | None:
         return await self.session.get(self.model, id)
 
     async def get_all(self) -> Sequence[T]:
