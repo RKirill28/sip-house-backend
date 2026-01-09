@@ -15,5 +15,5 @@ class CreateMessageModel(BaseModel):
     comment: str = Field(max_length=255)
 
 
-class ReadImageModel(CreateMessageModel):
+class ReadMessageModel(CreateMessageModel):
     id: UUID
