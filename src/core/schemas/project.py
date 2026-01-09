@@ -1,12 +1,17 @@
-from pydantic import BaseModel, Field, FileUrl
+from uuid import UUID
+from pydantic import BaseModel, Field
 
-from src.core.schemas import ImageModel
+from src.core.schemas.image import ReadImageModel
 
 
-class ProjectModel(BaseModel):
+class CreateProjectModel(BaseModel):
     name: str = Field(max_length=32)
-    desctiption: str = Field(max_length=500)
-    price: int
+    description: str = Field(max_length=500)
+    price: float
     price_description: str = Field(max_length=255)
-    pdf_url: FileUrl | None = None
-    images: list[ImageModel] | None = None
+
+
+class ReadProjectModel(CreateProjectModel):
+    id: UUID
+    pdf_url: str | None
+    images: list[ReadImageModel] | None
