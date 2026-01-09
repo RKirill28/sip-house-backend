@@ -4,7 +4,7 @@ from typing import Sequence
 from uuid import UUID
 
 from src.core.schemas.image import CreateImageInDBModel
-from src.core.db.models import Image, Project
+from src.core.db.models import Image
 
 from . import BaseRepository
 
