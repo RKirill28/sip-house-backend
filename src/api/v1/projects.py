@@ -34,3 +34,8 @@ async def add_pdf_urls(
     await project_repo.session.commit()
 
     return project
+
+
+@projects_router.post("/random", response_model=list[ReadProjectModel])
+async def get_random_project(project_repo: ProjectRepoDap, limit: int = Query(5)):
+    return await project_repo.get_random(limit)
