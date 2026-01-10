@@ -11,5 +11,5 @@ class DoneProject(Base):
     address: Mapped[str] = mapped_column(String(32))
 
     images: Mapped[list["Image"]] = relationship(
-        back_populates="done_project", cascade="all, delete-orphan"
+        back_populates="done_project", cascade="all, delete-orphan", lazy="selectin"
     )

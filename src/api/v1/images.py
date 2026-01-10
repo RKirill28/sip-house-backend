@@ -1,5 +1,5 @@
 from uuid import UUID
-from fastapi import APIRouter, Query, UploadFile, HTTPException
+from fastapi import APIRouter
 
 from src.core.schemas import (
     CreateImageModel,
@@ -8,8 +8,7 @@ from src.core.schemas import (
 )
 from src.core.conifg import settings
 
-from src.api.deps import FileSaverServiceDap, ImageRepoDap, ValidatorServiceDap
-from src.services.file_validator import GeneralValidationError
+from src.api.deps import ImageRepoDap
 
 
 images_router = APIRouter(prefix=settings.api.v1.images_prefix)

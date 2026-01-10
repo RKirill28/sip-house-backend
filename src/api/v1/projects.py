@@ -1,12 +1,9 @@
-from uuid import UUID
-
-from fastapi import APIRouter, UploadFile, Query, HTTPException
+from fastapi import APIRouter
 
 from src.core.conifg import settings
 from src.core.schemas import CreateProjectModel, ReadProjectModel, UpdateProjectModel
 
-from src.api.deps import FileSaverServiceDap, ValidatorServiceDap, ProjectRepoDap
-from src.services.file_validator import GeneralValidationError
+from src.api.deps import ProjectRepoDap
 
 
 projects_router = APIRouter(prefix=settings.api.v1.projects_prefix)

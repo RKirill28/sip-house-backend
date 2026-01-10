@@ -1,12 +1,10 @@
 from pathlib import Path
-from uuid import UUID, uuid4
-from random import choice
+from uuid import uuid4
 
 from fastapi import UploadFile
 
 from src.core.conifg import settings
 
-import string
 import aiofiles
 
 

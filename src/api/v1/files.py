@@ -1,4 +1,4 @@
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import APIRouter, UploadFile, HTTPException
 
 from src.core.conifg import settings
 from src.services.file_validator import GeneralValidationError
