@@ -1,9 +1,9 @@
-# Beggin
+# Start
 
 - [x] Init project
 - [x] Comtit init
 
-## Models:
+## DB:
 
 - [x] Project model
 - [x] Done project model
@@ -11,19 +11,30 @@
 
 - [x] Run mysql
 - [x] Create tables
-- [x] Make first migration:
-- config alembic
+- [x] Make first migration: config alembic
 
-## App:
+## Core:
 
 - [x] Create base repository
 - [x] Create project repo
 - [x] Create image repo
 
-- [ ] Create project schemas
-- [ ] Create image schemas
+- [x] Create project schemas
+- [x] Create image schemas
 
-## Api:
+## FastApi:
 
-- [ ] Create project(upload files):
-- [ ] Create all projects
+- [x] Create depends for repos
+- [x] Create depends for database session
+
+## Routers:
+
+- [ ] Added params offset and limit for get_all_projects router
+- [ ] Added sort_by(by description or by name, for example)
+- [ ] Added desc param for reverse the sort
+- [ ] Get random projects with limit param
+
+- [x] Create project(upload files)
+- [x] Create all projects
+
+Загрузка картинок: планиуреться загружать картинки отдельно от проектов.

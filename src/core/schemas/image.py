@@ -28,4 +28,10 @@ class CreateImageInDBModel(CreateImageModel):
 
 
 class ReadImageModel(CreateImageModel):
+    id: UUID
+    url: str | None
+
+
+class UpdateImageModel(BaseModel):
+    id: UUID
     url: str

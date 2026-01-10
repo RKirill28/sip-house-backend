@@ -1,9 +1,6 @@
 from src.api.deps import ImageRepoDap
 
 from src.core.schemas.image import CreateImageForm, CreateImageInDBModel
-from src.services.file_validator import (
-    ImageFileValidatorService,
-)
 from src.services.saver import FileSaverService
 
 

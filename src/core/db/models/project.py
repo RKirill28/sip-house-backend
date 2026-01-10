@@ -1,6 +1,6 @@
 from . import Base
 
-from sqlalchemy import String, Text, DECIMAL
+from sqlalchemy import String, Text, DECIMAL, JSON
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 
@@ -11,8 +11,7 @@ class Project(Base):
     description: Mapped[str] = mapped_column(String(500))
     price: Mapped[float] = mapped_column(DECIMAL(10, 2))
     price_description: Mapped[str] = mapped_column(String(255))
-    pdf_url: Mapped[str | None] = mapped_column(Text, default=None)
-
+    pdf_urls: Mapped[list[str] | None] = mapped_column(JSON, default=None)
     images: Mapped[list["Image"]] = relationship(
-        back_populates="project", cascade="all, delete-orphan"
+        back_populates="project", cascade="all, delete-orphan", lazy="selectin"
     )

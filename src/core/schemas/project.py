@@ -11,7 +11,12 @@ class CreateProjectModel(BaseModel):
     price_description: str = Field(max_length=255)
 
 
+class UpdateProjectModel(BaseModel):
+    id: UUID
+    pdf_urls: list[str]
+
+
 class ReadProjectModel(CreateProjectModel):
     id: UUID
-    pdf_url: str | None
-    images: list[ReadImageModel] | None
+    images: list[ReadImageModel] | None = None
+    pdf_urls: list[str] | None = None

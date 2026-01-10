@@ -20,8 +20,6 @@ class MyUUID(TypeDecorator):
     def process_result_value(self, value, dialect):
         if value is None:
             return None
-        print("VALUE:", value)
-        print("RESULT:", uuid.UUID(bytes=value))
         return uuid.UUID(bytes=value)
 
 

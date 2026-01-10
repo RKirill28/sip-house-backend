@@ -1,25 +1,24 @@
 from uuid import UUID
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Query, UploadFile, HTTPException
 
-from src.core.schemas.image import (
+from src.core.schemas import (
     CreateImageModel,
-    CreateImageInDBModel,
-    CreateImageForm,
     ReadImageModel,
+    UpdateImageModel,
 )
 from src.core.conifg import settings
-from src.api.deps import ImageRepoDap, ProjectRepoDap
 
-from src.services import ImageValidationError
-from src.usecases.image import CreateImage
+from src.api.deps import FileSaverServiceDap, ImageRepoDap, ValidatorServiceDap
+from src.services.file_validator import GeneralValidationError
 
 
 images_router = APIRouter(prefix=settings.api.v1.images_prefix)
 
 
-@images_router.get("/uploads/{project_id}/{image_filename}")
-async def get_image_by_url(project_id: UUID, image_filename: str) -> bytes:
-    with open(f'')
+@images_router.post("/image", response_model=ReadImageModel)
+async def create_image(image_repo: ImageRepoDap, create_image: CreateImageModel):
+    new = await image_repo.create(create_image)
+    return new
 
 
 @images_router.get("/{project_id}", response_model=list[ReadImageModel])
@@ -27,14 +26,14 @@ async def get_images(image_repo: ImageRepoDap, project_id: UUID):
     return await image_repo.get_all_by_project_id(project_id)
 
 
-@images_router.post("/image", response_model=CreateImageInDBModel)
-async def create_image(
-    image_repo: ImageRepoDap,
-    create_image: CreateImageForm = Form(media_type="multipart/form-data"),
+@images_router.post("/add_image_urls", response_model=list[ReadImageModel])
+async def add_image_ulrs(
+    image_repo: ImageRepoDap, update_model: list[UpdateImageModel]
 ):
-    try:
-        return await CreateImage(image_repo).execute(create_image)
-    except ImageValidationError:
-        raise HTTPException(
-                422, "The file validation error: This file is not allowed."
-            )
+    res = []
+    for model in update_model:
+        res.append(await image_repo.update_image(model))
+
+    await image_repo.session.commit()
+
+    return res

@@ -22,6 +22,7 @@ class ApiV1PrefixConfig(BaseModel):
     prefix: str = "/v1"
     projects_prefix: str = "/projects"
     images_prefix: str = "/images"
+    files_prefix: str = "/files"
 
 
 class ApiPrefixConfig(BaseModel):
