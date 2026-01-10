@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from src.core.conifg import settings
 from src.core.schemas import CreateProjectModel, ReadProjectModel, UpdateProjectModel
@@ -18,8 +18,10 @@ async def create_project(
 
 
 @projects_router.get("/", response_model=list[ReadProjectModel])
-async def get_all_projects(project_repo: ProjectRepoDap):
-    projects = await project_repo.get_all()
+async def get_all_projects(
+    project_repo: ProjectRepoDap, offset: int = Query(), limit: int = Query(10)
+):
+    projects = await project_repo.get_all(offset, limit)
     return projects
 
 

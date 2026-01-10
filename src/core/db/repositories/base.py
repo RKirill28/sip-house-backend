@@ -24,8 +24,8 @@ class BaseRepository[T: Base, P: BaseModel]:
     async def get_by_id(self, id: UUID) -> T | None:
         return await self.session.get(self.model, id)
 
-    async def get_all(self) -> Sequence[T]:
-        res = await self.session.execute(select(self.model))
+    async def get_all(self, offset: int, limit: int) -> Sequence[T]:
+        res = await self.session.execute(select(self.model).offset(offset).limit(limit))
         return res.scalars().all()
 
     async def remove(self, id: int) -> None:
