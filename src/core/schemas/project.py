@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 from pydantic import BaseModel, Field
 
@@ -20,3 +21,5 @@ class ReadProjectModel(CreateProjectModel):
     id: UUID
     images: list[ReadImageModel] | None = None
     pdf_urls: list[str] | None = None
+
+    model_config = {"from_attributes": True}

@@ -9,7 +9,7 @@ from src.api.deps import ProjectRepoDap
 projects_router = APIRouter(prefix=settings.api.v1.projects_prefix)
 
 
-@projects_router.post("/project", response_model=CreateProjectModel)
+@projects_router.post("/project", response_model=ReadProjectModel)
 async def create_project(
     project_repo: ProjectRepoDap, create_project: CreateProjectModel
 ):

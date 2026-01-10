@@ -18,6 +18,7 @@ class BaseRepository[T: Base, P: BaseModel]:
         new = self.model(**scheme.model_dump())
         self.session.add(new)
         await self.session.flush()
+        await self.session.refresh(new)
         return new
 
     async def get_by_id(self, id: UUID) -> T | None:
