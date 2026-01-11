@@ -7,7 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.dialects.mysql import VARCHAR
 
 
-from src.core.db.enums import ObjectType
+from src.core.enums import ObjectType
 
 
 class Message(Base):

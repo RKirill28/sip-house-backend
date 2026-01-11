@@ -29,10 +29,10 @@
 
 ## Routers:
 
-- [ ] Added params offset and limit for get_all_projects router
-- [ ] Added sort_by(by description or by name, for example)
-- [ ] Added desc param for reverse the sort
-- [ ] Get random projects with limit param
+- [x] Added params offset and limit for get_all_projects router
+- [] Added sort_by(by description or by name, for example)
+- [] Added desc param for reverse the sort
+- [x] Get random projects with limit param
 
 - [x] Create project(upload files)
 - [x] Create all projects

@@ -3,7 +3,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
-from src.core.db.enums import ObjectType
+from src.core.enums import ObjectType
 
 
 class CreateMessageModel(BaseModel):

@@ -23,4 +23,4 @@ class FileSaverService:
             while chunks := await file.read(1024 * 1024):
                 await f.write(chunks)
 
-        return str(file_path)
+        return str(file_path.relative_to(file_path.parent.parent))
