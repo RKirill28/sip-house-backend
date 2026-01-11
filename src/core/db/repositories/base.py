@@ -1,4 +1,4 @@
-from typing import Type, Sequence
+from typing import Type, Sequence, Generic, TypeVar, Optional
 from uuid import UUID
 from pydantic import BaseModel
 
@@ -7,8 +7,11 @@ from sqlalchemy import select
 
 from src.core.db.models import Base
 
+T = TypeVar('T', bound=Base)
+P = TypeVar('P', bound=BaseModel)
 
-class BaseRepository[T: Base, P: BaseModel]:
+
+class BaseRepository(Generic[T, P]):
     model: Type[T]
 
     def __init__(self, session: AsyncSession):
@@ -21,7 +24,7 @@ class BaseRepository[T: Base, P: BaseModel]:
         await self.session.refresh(new)
         return new
 
-    async def get_by_id(self, id: UUID) -> T | None:
+    async def get_by_id(self, id: UUID) -> Optional[T]:
         return await self.session.get(self.model, id)
 
     async def get_all(self, offset: int, limit: int) -> Sequence[T]:

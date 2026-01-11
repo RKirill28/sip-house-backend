@@ -12,7 +12,7 @@ from src.core.db.models.base import MyUUID
 class Image(Base):
     __tablename__ = "images"
 
-    url: Mapped[str | None] = mapped_column(Text, default=None)
+    url: Mapped[Optional[str]] = mapped_column(Text, default=None)
     name: Mapped[str] = mapped_column(String(32))
     description: Mapped[str] = mapped_column(String(255))
     main_image: Mapped[bool]
