@@ -2,6 +2,7 @@ from .project import (
     CreateProjectModel,
     ReadProjectModel,
     UpdateProjectModel,
+    ReadAllProjectsModel,
 )
 from .image import (
     CreateImageModel,
@@ -24,4 +25,5 @@ __all__ = [
     "ReadMessageModel",
     "UpdateProjectModel",
     "UpdateImageModel",
+    "ReadAllProjectsModel",
 ]

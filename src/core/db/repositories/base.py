@@ -7,8 +7,8 @@ from sqlalchemy import select
 
 from src.core.db.models import Base
 
-T = TypeVar('T', bound=Base)
-P = TypeVar('P', bound=BaseModel)
+T = TypeVar("T", bound=Base)
+P = TypeVar("P", bound=BaseModel)
 
 
 class BaseRepository(Generic[T, P]):

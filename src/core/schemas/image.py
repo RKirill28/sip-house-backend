@@ -15,6 +15,8 @@ class CreateImageModel(BaseModel):
     sort: int
     done_project_id: UUID | None = None
 
+    model_config = {"from_attributes": True}
+
 
 class CreateImageForm(CreateImageModel):
     image_file: UploadFile = File(media_type="image/png")

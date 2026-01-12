@@ -1,5 +1,7 @@
 from enum import Enum
 
+from src.core.db.models.project import Project
+
 
 class ObjectType(Enum):
     residential_house = "Дом для постоянного проживания"
@@ -9,7 +11,15 @@ class ObjectType(Enum):
 
 
 class ProjectSortBy(Enum):
-    NAME = "name"
-    DESCRIPTION = "description"
-    PRICE = "price"
-    PRICE_DESCRIPTION = "price_description"
+    NAME = ("name", Project.name)
+    DESCRIPTION = ("description", Project.description)
+    PRICE = ("price", Project.price)
+    PRICE_DESCRIPTION = ("price_description", Project.price_description)
+
+    @property
+    def project_attr(self):
+        return super().value[-1]
+
+    @property
+    def value(self):
+        return super().value[0]

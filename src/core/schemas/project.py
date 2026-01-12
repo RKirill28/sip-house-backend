@@ -11,6 +11,8 @@ class CreateProjectModel(BaseModel):
     price: float
     price_description: str = Field(max_length=255)
 
+    model_config = {"from_attributes": True}
+
 
 class UpdateProjectModel(BaseModel):
     id: UUID
@@ -21,5 +23,12 @@ class ReadProjectModel(CreateProjectModel):
     id: UUID
     images: list[ReadImageModel] | None = None
     pdf_urls: list[str] | None = None
+
+    # model_config = {"from_attributes": True}
+
+
+class ReadAllProjectsModel(BaseModel):
+    items: list[ReadProjectModel]
+    count: int
 
     model_config = {"from_attributes": True}
