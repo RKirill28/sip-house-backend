@@ -21,6 +21,7 @@ class RunConfig(BaseModel):
 class ApiV1PrefixConfig(BaseModel):
     prefix: str = "/v1"
     projects_prefix: str = "/projects"
+    done_projects_prefix: str = "/done_projects"
     images_prefix: str = "/images"
     files_prefix: str = "/files"
 
