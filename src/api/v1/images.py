@@ -1,11 +1,11 @@
 from uuid import UUID
 from fastapi import APIRouter, HTTPException
 
-from src.core.db.repositories.image import NoImageFound
+from src.core.db.repositories.base import NoEntityByIdFound
 from src.core.schemas import (
     CreateImageModel,
     ReadImageModel,
-    UpdateImageModel,
+    UpdateImageUrlModel,
 )
 from src.core.conifg import settings
 
@@ -28,15 +28,24 @@ async def get_images(image_repo: ImageRepoDap, project_id: UUID):
 
 @images_router.post("/add_image_urls", response_model=list[ReadImageModel])
 async def add_image_ulrs(
-    image_repo: ImageRepoDap, update_model: list[UpdateImageModel]
+    image_repo: ImageRepoDap, update_model: list[UpdateImageUrlModel]
 ):
     res = []
     for model in update_model:
         try:
             res.append(await image_repo.update(model))
-        except NoImageFound:
+        except NoEntityByIdFound:
             raise HTTPException(404, "No image found by id.")
 
     await image_repo.session.commit()
 
     return res
+
+
+@images_router.put("/image/{image_id}")
+async def delete_image_by_id(image_repo: ImageRepoDap, image_id: UUID):
+    try:
+        await image_repo.remove(image_id)
+        return {"success": True}
+    except NoEntityByIdFound:
+        raise HTTPException(404, "No image found by id.")

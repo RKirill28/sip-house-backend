@@ -2,8 +2,7 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException, Query
 
 from src.core.conifg import settings
-from src.core.db.repositories.project import NoProjectFound
-from src.core.enums import ProjectSortBy
+from src.core.db.repositories.base import NoEntityByIdFound
 from src.core.schemas import CreateProjectModel, ReadProjectModel, UpdateProjectModel
 
 from src.api.deps import ProjectRepoDap, AllParamsDap
@@ -34,10 +33,11 @@ async def get_all_projects(
     return ReadAllProjectsModel(items=items, count=count)
 
 
-@projects_router.get("/project/{poject_id}", response_model=ReadProjectModel)
+@projects_router.get("/project/{project_id}", response_model=ReadProjectModel)
 async def get_project_by_id(project_repo: ProjectRepoDap, project_id: UUID):
-    project = await project_repo.get_by_id(project_id)
-    if project is None:
+    try:
+        project = await project_repo.get_by_id(project_id)
+    except NoEntityByIdFound:
         raise HTTPException(404, "No project found by id.")
 
     return project
@@ -50,7 +50,7 @@ async def add_pdf_urls(
 ):
     try:
         project = await project_repo.update(update_model)
-    except NoProjectFound:
+    except NoEntityByIdFound:
         raise HTTPException(404, "No project found by id.")
 
     await project_repo.session.commit()

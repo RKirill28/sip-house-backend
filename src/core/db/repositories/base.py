@@ -13,6 +13,10 @@ P = TypeVar("P", bound=BaseModel)
 S = TypeVar("S", bound=SortBy)
 
 
+class NoEntityByIdFound(Exception):
+    pass
+
+
 class BaseRepository(Generic[T, P, S]):
     model: Type[T]
 
@@ -26,8 +30,11 @@ class BaseRepository(Generic[T, P, S]):
         await self.session.refresh(new)
         return new
 
-    async def get_by_id(self, id: UUID) -> Optional[T]:
-        return await self.session.get(self.model, id)
+    async def get_by_id(self, id: UUID) -> T:
+        res = await self.session.get(self.model, id)
+        if res is None:
+            raise NoEntityByIdFound
+        return res
 
     async def get_all(
         self, offset: int, limit: int, sort_by: S, is_desc: bool
@@ -44,7 +51,6 @@ class BaseRepository(Generic[T, P, S]):
 
         return (res.scalars().all(), len(count.scalars().all()))
 
-    async def remove(self, id: int) -> None:
-        obj = await self.session.get(self.model, id)
-        if obj:
-            await self.session.delete(obj)
+    async def remove(self, id: UUID) -> None:
+        obj = self.get_by_id(id)
+        await self.session.delete(obj)

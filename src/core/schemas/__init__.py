@@ -8,7 +8,7 @@ from .image import (
     CreateImageModel,
     CreateImageInDBModel,
     ReadImageModel,
-    UpdateImageModel,
+    UpdateImageUrlModel,
 )
 from .done_project import (
     CreateDoneProjectModel,
@@ -30,6 +30,6 @@ __all__ = [
     "CreateMessageModel",
     "ReadMessageModel",
     "UpdateProjectModel",
-    "UpdateImageModel",
+    "UpdateImageUrlModel",
     "ReadAllProjectsModel",
 ]

@@ -33,6 +33,6 @@ class ReadImageModel(CreateImageModel):
     url: str | None
 
 
-class UpdateImageModel(MyBaseModel):
+class UpdateImageUrlModel(MyBaseModel):
     id: UUID
     url: str
