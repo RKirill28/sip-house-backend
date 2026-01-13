@@ -42,7 +42,7 @@ async def add_image_ulrs(
     return res
 
 
-@images_router.put("/image/{image_id}")
+@images_router.delete("/image/{image_id}")
 async def delete_image_by_id(image_repo: ImageRepoDap, image_id: UUID):
     try:
         await image_repo.remove(image_id)
