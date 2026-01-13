@@ -1,9 +1,18 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 
+from src.core.schemas.base import MyBaseModel
 from src.core.schemas.image import ReadImageModel
 
 
-class DoneProjectModel(BaseModel):
+class CreateDoneProjectModel(MyBaseModel):
     name: str = Field(max_length=32)
     address: str = Field(max_length=32)
+
+
+class ReadDoneProjectModel(CreateDoneProjectModel):
     images: list[ReadImageModel]
+
+
+class ReadAllDoneProjectsModel(MyBaseModel):
+    items: list[ReadDoneProjectModel]
+    count: int

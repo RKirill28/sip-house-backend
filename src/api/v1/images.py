@@ -1,6 +1,7 @@
 from uuid import UUID
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
+from src.core.db.repositories.image import NoImageFound
 from src.core.schemas import (
     CreateImageModel,
     ReadImageModel,
@@ -31,7 +32,10 @@ async def add_image_ulrs(
 ):
     res = []
     for model in update_model:
-        res.append(await image_repo.update_image(model))
+        try:
+            res.append(await image_repo.update(model))
+        except NoImageFound:
+            raise HTTPException(404, "No image found by id.")
 
     await image_repo.session.commit()
 

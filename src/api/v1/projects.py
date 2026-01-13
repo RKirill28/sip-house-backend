@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Query
+from uuid import UUID
+from fastapi import APIRouter, HTTPException, Query
 
 from src.core.conifg import settings
+from src.core.db.repositories.project import NoProjectFound
 from src.core.enums import ProjectSortBy
 from src.core.schemas import CreateProjectModel, ReadProjectModel, UpdateProjectModel
 
-from src.api.deps import ProjectRepoDap
+from src.api.deps import ProjectRepoDap, AllParamsDap
 from src.core.schemas import ReadAllProjectsModel
 
 
@@ -16,24 +18,29 @@ async def create_project(
     project_repo: ProjectRepoDap, create_project: CreateProjectModel
 ):
     new = await project_repo.create(create_project)
-    await project_repo.session.commit()
     return new
 
 
 @projects_router.get("/", response_model=ReadAllProjectsModel)
 async def get_all_projects(
     project_repo: ProjectRepoDap,
-    offset: int = Query(0),
-    limit: int = Query(10),
-    sort_by: ProjectSortBy = Query(),
-    is_desk: bool = False,
+    params: AllParamsDap,
 ):
-    projects, count = await project_repo.get_all_with_count(
-        offset, limit, sort_by, is_desk
+    projects, count = await project_repo.get_all(
+        params["offset"], params["limit"], params["sort_by"], params["is_desc"]
     )
     items = [ReadProjectModel.model_validate(p) for p in projects]
 
     return ReadAllProjectsModel(items=items, count=count)
+
+
+@projects_router.get("/project/{poject_id}", response_model=ReadProjectModel)
+async def get_project_by_id(project_repo: ProjectRepoDap, project_id: UUID):
+    project = await project_repo.get_by_id(project_id)
+    if project is None:
+        raise HTTPException(404, "No project found by id.")
+
+    return project
 
 
 @projects_router.post("/add_pdf_urls", response_model=ReadProjectModel)
@@ -41,12 +48,16 @@ async def add_pdf_urls(
     project_repo: ProjectRepoDap,
     update_model: UpdateProjectModel,
 ):
-    project = await project_repo.update(update_model)
+    try:
+        project = await project_repo.update(update_model)
+    except NoProjectFound:
+        raise HTTPException(404, "No project found by id.")
+
     await project_repo.session.commit()
 
     return project
 
 
-@projects_router.post("/random", response_model=list[ReadProjectModel])
+@projects_router.get("/random", response_model=list[ReadProjectModel])
 async def get_random_project(project_repo: ProjectRepoDap, limit: int = Query(5)):
     return await project_repo.get_random(limit)

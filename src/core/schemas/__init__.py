@@ -10,7 +10,11 @@ from .image import (
     ReadImageModel,
     UpdateImageModel,
 )
-from .done_project import DoneProjectModel
+from .done_project import (
+    CreateDoneProjectModel,
+    ReadDoneProjectModel,
+    ReadAllDoneProjectsModel,
+)
 from .message import CreateMessageModel, ReadMessageModel
 
 
@@ -20,7 +24,9 @@ __all__ = [
     "CreateImageModel",
     "ReadImageModel",
     "CreateImageInDBModel",
-    "DoneProjectModel",
+    "CreateDoneProjectModel",
+    "ReadAllDoneProjectsModel",
+    "ReadDoneProjectModel",
     "CreateMessageModel",
     "ReadMessageModel",
     "UpdateProjectModel",

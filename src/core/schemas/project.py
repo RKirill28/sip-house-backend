@@ -1,34 +1,28 @@
-from typing import Optional
 from uuid import UUID
-from pydantic import BaseModel, Field
+from pydantic import Field
 
+from src.core.schemas.base import MyBaseModel
 from src.core.schemas.image import ReadImageModel
 
 
-class CreateProjectModel(BaseModel):
+class CreateProjectModel(MyBaseModel):
     name: str = Field(max_length=32)
     description: str = Field(max_length=500)
     price: float
-    price_description: str = Field(max_length=255)
-
-    model_config = {"from_attributes": True}
+    price_description: str = Field(max_length=255, alias="priceDescription")
 
 
-class UpdateProjectModel(BaseModel):
+class UpdateProjectModel(MyBaseModel):
     id: UUID
-    pdf_urls: list[str]
+    pdf_urls: list[str] = Field(alias="pdfUrls")
 
 
 class ReadProjectModel(CreateProjectModel):
     id: UUID
     images: list[ReadImageModel] | None = None
-    pdf_urls: list[str] | None = None
-
-    # model_config = {"from_attributes": True}
+    pdf_urls: list[str] | None = Field(default=None, alias="pdfUrls")
 
 
-class ReadAllProjectsModel(BaseModel):
+class ReadAllProjectsModel(MyBaseModel):
     items: list[ReadProjectModel]
     count: int
-
-    model_config = {"from_attributes": True}

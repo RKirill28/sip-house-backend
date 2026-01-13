@@ -1,25 +1,25 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from fastapi import UploadFile, File
 
 from uuid import UUID
 
+from src.core.schemas.base import MyBaseModel
 
-class CreateImageModel(BaseModel):
+
+class CreateImageModel(MyBaseModel):
     """For API"""
 
-    project_id: UUID
+    project_id: UUID = Field(alias="projectId")
     name: str = Field(max_length=32)
     description: str = Field(max_length=255)
-    main_image: bool
+    main_image: bool = Field(alias="mainImage")
     sort: int
-    done_project_id: UUID | None = None
-
-    model_config = {"from_attributes": True}
+    done_project_id: UUID | None = Field(default=None, alias="doneProjectId")
 
 
 class CreateImageForm(CreateImageModel):
-    image_file: UploadFile = File(media_type="image/png")
+    image_file: UploadFile = File(media_type="image/png", alias="imageFile")
 
 
 class CreateImageInDBModel(CreateImageModel):
@@ -33,6 +33,6 @@ class ReadImageModel(CreateImageModel):
     url: str | None
 
 
-class UpdateImageModel(BaseModel):
+class UpdateImageModel(MyBaseModel):
     id: UUID
     url: str
