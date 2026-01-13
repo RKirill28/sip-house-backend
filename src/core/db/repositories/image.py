@@ -1,7 +1,9 @@
 from pathlib import Path
 from sqlalchemy import select
 
-from typing import Sequence, override
+from typing import Sequence
+from typing_extensions import override
+
 from uuid import UUID
 
 from src.core.enums import ImageSortBy
