@@ -22,3 +22,6 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: "/var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/api"
           EXCLUDE: "/.git/, /.github/"
+          SCRIPT_AFTER: |
+            touch /var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/.restart-app
+            echo "Файл перезагрузки создан"
