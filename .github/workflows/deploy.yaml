@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy using rsync
+      - name: Deploy using SCP
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.REMOTE_HOST }}
@@ -25,3 +25,14 @@ jobs:
             uploads/
             .git/
             .github/
+
+      - name: Post-deploy commands (Cleanup & Restart)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/
+            touch .restart-app
+            echo "Deploy finished successfully"
