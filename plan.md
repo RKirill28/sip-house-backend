@@ -31,13 +31,13 @@
 
 - [x] Add params offset and limit for get_all_projects router:
   - [x] Add count of all projects from db to response and response model: { items: [], count: int }
-  - [ ] Add count and items model to done projects
+  - [x] Add count and items model to done projects
   - [ ] Add done projects router
 - [x] Add sort_by(by description or by name, for example)
 - [x] Add desc param for reverse the sort
 - [x] Get random projects with limit param
 
-- [ ] Done projects(get_all with offset and limit)
+- [x] Done projects(get_all with offset and limit)
 
 - [x] Create project(upload files)
 - [x] Create all projects

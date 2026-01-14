@@ -62,5 +62,5 @@ class BaseRepository(Generic[T, P, S]):
         return entity
 
     async def remove(self, id: UUID) -> None:
-        obj = self.get_by_id(id)
+        obj = await self.get_by_id(id)
         await self.session.delete(obj)
