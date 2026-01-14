@@ -29,9 +29,9 @@ jobs:
       - name: Post-deploy commands (Cleanup & Restart)
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_KEY }}
           script: |
             cd /var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/
             touch .restart-app
