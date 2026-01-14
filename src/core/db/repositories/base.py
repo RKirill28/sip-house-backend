@@ -7,6 +7,7 @@ from sqlalchemy import select, desc
 
 from src.core.db.models import Base
 from src.core.enums import SortBy
+from src.core.schemas.base import MyBaseModel
 
 T = TypeVar("T", bound=Base)
 P = TypeVar("P", bound=BaseModel)
@@ -50,6 +51,15 @@ class BaseRepository(Generic[T, P, S]):
         count = await self.session.execute(select(self.model.id))
 
         return (res.scalars().all(), len(count.scalars().all()))
+
+    async def update(self, entity_id: UUID, update_model: MyBaseModel) -> T:
+        entity = await self.get_by_id(entity_id)
+        update_model_dict = update_model.model_dump()
+        for k, _ in entity.__dict__.items():
+            if new_v := update_model_dict.get(k) is not None:
+                entity.__dict__[k] = new_v
+
+        return entity
 
     async def remove(self, id: UUID) -> None:
         obj = self.get_by_id(id)

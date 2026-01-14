@@ -12,9 +12,18 @@ class CreateProjectModel(MyBaseModel):
     price_description: str = Field(max_length=255, alias="priceDescription")
 
 
-class UpdateProjectModel(MyBaseModel):
+class UpdateProjectPdfUrlModel(MyBaseModel):
     id: UUID
     pdf_urls: list[str] = Field(alias="pdfUrls")
+
+
+class UpdateProjectModel(MyBaseModel):
+    name: str | None = Field(None, max_length=32)
+    description: str | None = Field(None, max_length=500)
+    price: float | None = None
+    price_description: str | None = Field(
+        None, max_length=255, alias="priceDescription"
+    )
 
 
 class ReadProjectModel(CreateProjectModel):

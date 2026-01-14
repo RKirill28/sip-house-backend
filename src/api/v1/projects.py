@@ -3,7 +3,12 @@ from fastapi import APIRouter, HTTPException, Query
 
 from src.core.conifg import settings
 from src.core.db.repositories.base import NoEntityByIdFound
-from src.core.schemas import CreateProjectModel, ReadProjectModel, UpdateProjectModel
+from src.core.schemas import (
+    CreateProjectModel,
+    ReadProjectModel,
+    UpdateProjectPdfUrlModel,
+    UpdateProjectModel,
+)
 
 from src.api.deps import ProjectRepoDap, AllParamsDap
 from src.core.schemas import ReadAllProjectsModel
@@ -43,13 +48,13 @@ async def get_project_by_id(project_repo: ProjectRepoDap, project_id: UUID):
     return project
 
 
-@projects_router.post("/add_pdf_urls", response_model=ReadProjectModel)
+@projects_router.put("/add_pdf_urls", response_model=ReadProjectModel)
 async def add_pdf_urls(
     project_repo: ProjectRepoDap,
-    update_model: UpdateProjectModel,
+    update_model: UpdateProjectPdfUrlModel,
 ):
     try:
-        project = await project_repo.update(update_model)
+        project = await project_repo.update_pdf_url(update_model)
     except NoEntityByIdFound:
         raise HTTPException(404, "No project found by id.")
 
@@ -61,3 +66,11 @@ async def add_pdf_urls(
 @projects_router.get("/random", response_model=list[ReadProjectModel])
 async def get_random_project(project_repo: ProjectRepoDap, limit: int = Query(5)):
     return await project_repo.get_random(limit)
+
+
+@projects_router.put("/project/update/{project_id}")
+async def update_project(
+    project_repo: ProjectRepoDap, project_id: UUID, update_model: UpdateProjectModel
+):
+    await project_repo.update(project_id, update_model)
+    await project_repo.session.commit()

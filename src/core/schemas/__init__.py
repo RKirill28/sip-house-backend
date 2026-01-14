@@ -1,6 +1,7 @@
 from .project import (
     CreateProjectModel,
     ReadProjectModel,
+    UpdateProjectPdfUrlModel,
     UpdateProjectModel,
     ReadAllProjectsModel,
 )
@@ -29,6 +30,7 @@ __all__ = [
     "ReadDoneProjectModel",
     "CreateMessageModel",
     "ReadMessageModel",
+    "UpdateProjectPdfUrlModel",
     "UpdateProjectModel",
     "UpdateImageUrlModel",
     "ReadAllProjectsModel",

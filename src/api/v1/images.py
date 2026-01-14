@@ -26,7 +26,7 @@ async def get_images(image_repo: ImageRepoDap, project_id: UUID):
     return await image_repo.get_all_by_project_id(project_id)
 
 
-@images_router.post("/add_image_urls", response_model=list[ReadImageModel])
+@images_router.put("/add_image_urls", response_model=list[ReadImageModel])
 async def add_image_ulrs(
     image_repo: ImageRepoDap, update_model: list[UpdateImageUrlModel]
 ):
