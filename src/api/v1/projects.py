@@ -38,16 +38,6 @@ async def get_all_projects(
     return ReadAllProjectsModel(items=items, count=count)
 
 
-@projects_router.get("/{project_id}", response_model=ReadProjectModel)
-async def get_project_by_id(project_repo: ProjectRepoDap, project_id: UUID):
-    try:
-        project = await project_repo.get_by_id(project_id)
-    except NoEntityByIdFound:
-        raise HTTPException(404, "No project found by id.")
-
-    return project
-
-
 @projects_router.put("/add_pdf_urls", response_model=ReadProjectModel)
 async def add_pdf_urls(
     project_repo: ProjectRepoDap,
@@ -87,3 +77,13 @@ async def delete_project(project_repo: ProjectRepoDap, project_id: UUID):
         return {"success": True}
     except NoEntityByIdFound:
         raise HTTPException(404, "No project found by id.")
+
+
+@projects_router.get("/{project_id}", response_model=ReadProjectModel)
+async def get_project_by_id(project_repo: ProjectRepoDap, project_id: UUID):
+    try:
+        project = await project_repo.get_by_id(project_id)
+    except NoEntityByIdFound:
+        raise HTTPException(404, "No project found by id.")
+
+    return project
