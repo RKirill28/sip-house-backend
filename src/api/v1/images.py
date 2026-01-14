@@ -21,11 +21,6 @@ async def create_image(image_repo: ImageRepoDap, create_image: CreateImageModel)
     return new
 
 
-@images_router.get("/{project_id}", response_model=list[ReadImageModel])
-async def get_images(image_repo: ImageRepoDap, project_id: UUID):
-    return await image_repo.get_all_by_project_id(project_id)
-
-
 @images_router.put("/add_image_urls", response_model=list[ReadImageModel])
 async def add_image_ulrs(
     image_repo: ImageRepoDap, update_model: list[UpdateImageUrlModel]
@@ -49,3 +44,8 @@ async def delete_image_by_id(image_repo: ImageRepoDap, image_id: UUID):
         return {"success": True}
     except NoEntityByIdFound:
         raise HTTPException(404, "No image found by id.")
+
+
+@images_router.get("/{project_id}", response_model=list[ReadImageModel])
+async def get_images(image_repo: ImageRepoDap, project_id: UUID):
+    return await image_repo.get_all_by_project_id(project_id)
