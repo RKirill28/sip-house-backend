@@ -17,11 +17,8 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-
           key: ${{ secrets.SSH_KEY }}
           source: "./"
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
           target: "/var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/api"
           script: |
             rsync -rlgoDzvc -i --delete . ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/api --exclude=/.git/ --exclude=/.github/ --exclude=/uploads/
