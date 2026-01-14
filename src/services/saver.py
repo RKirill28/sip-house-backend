@@ -8,7 +8,7 @@ from src.core.conifg import settings
 import aiofiles
 
 
-class FileSaverService:
+class FileWorkerService:
     UPLOADS_BASE_DIR = settings.UPLOADS_BASE_DIR
 
     async def save(self, file: UploadFile) -> str:
@@ -24,3 +24,10 @@ class FileSaverService:
                 await f.write(chunks)
 
         return str(file_path.relative_to(file_path.parent.parent))
+
+    def remove(self, file_url: str) -> None:
+        file_path = Path(file_url)
+        if file_path:
+            path = settings.BASE_DIR / file_path
+            if path.is_file():
+                path.unlink(missing_ok=True)

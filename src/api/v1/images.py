@@ -9,7 +9,7 @@ from src.core.schemas import (
 )
 from src.core.conifg import settings
 
-from src.api.deps import ImageRepoDap
+from src.api.deps import FileWorkerServiceDap, ImageRepoDap
 
 
 images_router = APIRouter(prefix=settings.api.v1.images_prefix)
@@ -28,7 +28,7 @@ async def add_image_ulrs(
     res = []
     for model in update_model:
         try:
-            res.append(await image_repo.update(model))
+            res.append(await image_repo.update_image_url(model))
         except NoEntityByIdFound:
             raise HTTPException(404, "No image found by id.")
 
@@ -38,9 +38,18 @@ async def add_image_ulrs(
 
 
 @images_router.delete("/{image_id}")
-async def delete_image_by_id(image_repo: ImageRepoDap, image_id: UUID):
+async def delete_image_by_id(
+    image_repo: ImageRepoDap, file_worker: FileWorkerServiceDap, image_id: UUID
+):
     try:
-        await image_repo.remove(image_id)
+        image = await image_repo.remove(image_id)
+        await image_repo.session.commit()
+
+        if image.url:
+            file_worker.remove(image.url)
+        else:
+            HTTPException(404, "No image url found.")
+
         return {"success": True}
     except NoEntityByIdFound:
         raise HTTPException(404, "No image found by id.")

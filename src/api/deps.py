@@ -11,7 +11,7 @@ from src.core.db.repositories import (
 from src.core.db.helper import get_session
 from src.core.enums import ProjectSortBy
 from src.services.file_validator import GeneralValidatorService
-from src.services.saver import FileSaverService
+from src.services.saver import FileWorkerService
 
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
@@ -33,8 +33,8 @@ def get_file_validator() -> GeneralValidatorService:
     return GeneralValidatorService()
 
 
-def get_file_saver() -> FileSaverService:
-    return FileSaverService()
+def get_file_saver() -> FileWorkerService:
+    return FileWorkerService()
 
 
 def get_all_params(
@@ -53,4 +53,4 @@ DoneProjectRepoDap = Annotated[DoneProjectRepository, Depends(get_done_projects_
 AllParamsDap = Annotated[dict, Depends(get_all_params)]
 
 ValidatorServiceDap = Annotated[GeneralValidatorService, Depends(get_file_validator)]
-FileSaverServiceDap = Annotated[FileSaverService, Depends(get_file_saver)]
+FileWorkerServiceDap = Annotated[FileWorkerService, Depends(get_file_saver)]

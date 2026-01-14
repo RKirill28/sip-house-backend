@@ -3,7 +3,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, desc
+from sqlalchemy import delete, select, desc
 
 from src.core.db.models import Base
 from src.core.enums import SortBy
@@ -61,6 +61,7 @@ class BaseRepository(Generic[T, P, S]):
 
         return entity
 
-    async def remove(self, id: UUID) -> None:
+    async def remove(self, id: UUID) -> T:
         obj = await self.get_by_id(id)
         await self.session.delete(obj)
+        return obj

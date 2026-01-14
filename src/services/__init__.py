@@ -3,11 +3,11 @@ from .file_validator import (
     FileValidationError,
     ImageValidationError,
 )
-from .saver import FileSaverService
+from .saver import FileWorkerService
 
 __all__ = [
     "FileValidatorService",
     "FileValidationError",
     "ImageValidationError",
-    "FileSaverService",
+    "FileWorkerService",
 ]

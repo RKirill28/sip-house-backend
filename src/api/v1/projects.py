@@ -1,3 +1,4 @@
+from pathlib import Path
 from uuid import UUID
 from fastapi import APIRouter, HTTPException, Query
 
@@ -10,7 +11,12 @@ from src.core.schemas import (
     UpdateProjectModel,
 )
 
-from src.api.deps import ProjectRepoDap, AllParamsDap
+from src.api.deps import (
+    FileWorkerServiceDap,
+    ImageRepoDap,
+    ProjectRepoDap,
+    AllParamsDap,
+)
 from src.core.schemas import ReadAllProjectsModel
 
 
@@ -22,6 +28,7 @@ async def create_project(
     project_repo: ProjectRepoDap, create_project: CreateProjectModel
 ):
     new = await project_repo.create(create_project)
+    await project_repo.session.commit()
     return new
 
 
@@ -45,12 +52,11 @@ async def add_pdf_urls(
 ):
     try:
         project = await project_repo.update_pdf_url(update_model)
+        await project_repo.session.commit()
+
+        return project
     except NoEntityByIdFound:
         raise HTTPException(404, "No project found by id.")
-
-    await project_repo.session.commit()
-
-    return project
 
 
 @projects_router.get("/random", response_model=list[ReadProjectModel])
@@ -71,9 +77,20 @@ async def update_project(
 
 
 @projects_router.delete("/{project_id}")
-async def delete_project(project_repo: ProjectRepoDap, project_id: UUID):
+async def delete_project(
+    project_repo: ProjectRepoDap,
+    file_worker: FileWorkerServiceDap,
+    project_id: UUID,
+):
     try:
+        project = await project_repo.get_by_id(project_id)
+        image_files: list[str] = [image.url for image in project.images]
         await project_repo.remove(project_id)
+        await project_repo.session.commit()
+
+        for file in image_files:
+            file_worker.remove(file)
+
         return {"success": True}
     except NoEntityByIdFound:
         raise HTTPException(404, "No project found by id.")
