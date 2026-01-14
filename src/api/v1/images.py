@@ -15,7 +15,7 @@ from src.api.deps import ImageRepoDap
 images_router = APIRouter(prefix=settings.api.v1.images_prefix)
 
 
-@images_router.post("/image", response_model=ReadImageModel)
+@images_router.post("", response_model=ReadImageModel)
 async def create_image(image_repo: ImageRepoDap, create_image: CreateImageModel):
     new = await image_repo.create(create_image)
     return new
@@ -42,7 +42,7 @@ async def add_image_ulrs(
     return res
 
 
-@images_router.delete("/image/{image_id}")
+@images_router.delete("/{image_id}")
 async def delete_image_by_id(image_repo: ImageRepoDap, image_id: UUID):
     try:
         await image_repo.remove(image_id)

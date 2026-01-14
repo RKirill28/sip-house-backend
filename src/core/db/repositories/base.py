@@ -1,4 +1,4 @@
-from typing import Type, Sequence, Generic, TypeVar, Optional
+from typing import Type, Sequence, Generic, TypeVar
 from uuid import UUID
 from pydantic import BaseModel
 
@@ -56,8 +56,8 @@ class BaseRepository(Generic[T, P, S]):
         entity = await self.get_by_id(entity_id)
         update_model_dict = update_model.model_dump()
         for k, _ in entity.__dict__.items():
-            if new_v := update_model_dict.get(k) is not None:
-                entity.__dict__[k] = new_v
+            if (new_v := update_model_dict.get(k)) is not None:
+                setattr(entity, k, new_v)
 
         return entity
 

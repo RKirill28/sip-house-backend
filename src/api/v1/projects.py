@@ -17,7 +17,7 @@ from src.core.schemas import ReadAllProjectsModel
 projects_router = APIRouter(prefix=settings.api.v1.projects_prefix)
 
 
-@projects_router.post("/project", response_model=ReadProjectModel)
+@projects_router.post("", response_model=ReadProjectModel)
 async def create_project(
     project_repo: ProjectRepoDap, create_project: CreateProjectModel
 ):
@@ -25,7 +25,7 @@ async def create_project(
     return new
 
 
-@projects_router.get("/", response_model=ReadAllProjectsModel)
+@projects_router.get("", response_model=ReadAllProjectsModel)
 async def get_all_projects(
     project_repo: ProjectRepoDap,
     params: AllParamsDap,
@@ -38,7 +38,7 @@ async def get_all_projects(
     return ReadAllProjectsModel(items=items, count=count)
 
 
-@projects_router.get("/project/{project_id}", response_model=ReadProjectModel)
+@projects_router.get("/{project_id}", response_model=ReadProjectModel)
 async def get_project_by_id(project_repo: ProjectRepoDap, project_id: UUID):
     try:
         project = await project_repo.get_by_id(project_id)
@@ -68,9 +68,22 @@ async def get_random_project(project_repo: ProjectRepoDap, limit: int = Query(5)
     return await project_repo.get_random(limit)
 
 
-@projects_router.put("/project/update/{project_id}")
+@projects_router.put("/{project_id}", response_model=ReadProjectModel)
 async def update_project(
     project_repo: ProjectRepoDap, project_id: UUID, update_model: UpdateProjectModel
 ):
-    await project_repo.update(project_id, update_model)
-    await project_repo.session.commit()
+    try:
+        res = await project_repo.update(project_id, update_model)
+        await project_repo.session.commit()
+        return res
+    except NoEntityByIdFound:
+        raise HTTPException(404, "No project found by id.")
+
+
+@projects_router.delete("/{project_id}")
+async def delete_project(project_repo: ProjectRepoDap, project_id: UUID):
+    try:
+        await project_repo.remove(project_id)
+        return {"success": True}
+    except NoEntityByIdFound:
+        raise HTTPException(404, "No project found by id.")
