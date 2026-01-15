@@ -22,16 +22,14 @@ projects_router = APIRouter(prefix=settings.api.v1.projects_prefix)
 
 
 @projects_router.post("", response_model=ReadProjectModel)
-async def create_project(
-    project_repo: ProjectRepoDap, create_project: CreateProjectModel
-):
+async def create(project_repo: ProjectRepoDap, create_project: CreateProjectModel):
     new = await project_repo.create(create_project)
     await project_repo.session.commit()
     return new
 
 
 @projects_router.get("", response_model=ReadAllProjectsModel)
-async def get_all_projects(
+async def get_all(
     project_repo: ProjectRepoDap,
     params: AllProjectParamsDap,
 ):
@@ -58,12 +56,12 @@ async def add_pdf_urls(
 
 
 @projects_router.get("/random", response_model=list[ReadProjectModel])
-async def get_random_project(project_repo: ProjectRepoDap, limit: int = Query(5)):
+async def get_random(project_repo: ProjectRepoDap, limit: int = Query(5)):
     return await project_repo.get_random(limit)
 
 
 @projects_router.put("/{project_id}", response_model=ReadProjectModel)
-async def update_project(
+async def update(
     project_repo: ProjectRepoDap, project_id: UUID, update_model: UpdateProjectModel
 ):
     try:
@@ -75,7 +73,7 @@ async def update_project(
 
 
 @projects_router.delete("/{project_id}")
-async def delete_project(
+async def delete(
     project_repo: ProjectRepoDap,
     file_worker: FileWorkerServiceDap,
     project_id: UUID,
@@ -95,7 +93,7 @@ async def delete_project(
 
 
 @projects_router.get("/{project_id}", response_model=ReadProjectModel)
-async def get_project_by_id(project_repo: ProjectRepoDap, project_id: UUID):
+async def get_by_id(project_repo: ProjectRepoDap, project_id: UUID):
     try:
         project = await project_repo.get_by_id(project_id)
     except NoEntityByIdFound:

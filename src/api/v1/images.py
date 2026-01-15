@@ -16,7 +16,7 @@ images_router = APIRouter(prefix=settings.api.v1.images_prefix)
 
 
 @images_router.post("", response_model=ReadImageModel)
-async def create_image(image_repo: ImageRepoDap, create_image: CreateImageModel):
+async def create(image_repo: ImageRepoDap, create_image: CreateImageModel):
     new = await image_repo.create(create_image)
     return new
 
@@ -38,7 +38,7 @@ async def add_image_ulrs(
 
 
 @images_router.delete("/{image_id}")
-async def delete_image_by_id(
+async def delete_by_id(
     image_repo: ImageRepoDap, file_worker: FileWorkerServiceDap, image_id: UUID
 ):
     try:
@@ -56,5 +56,5 @@ async def delete_image_by_id(
 
 
 @images_router.get("/{project_id}", response_model=list[ReadImageModel])
-async def get_images(image_repo: ImageRepoDap, project_id: UUID):
+async def get_by_project_id(image_repo: ImageRepoDap, project_id: UUID):
     return await image_repo.get_all_by_project_id(project_id)
