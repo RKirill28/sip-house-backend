@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from src.core.conifg import settings
 
-from src.api.deps import AllParamsDap, DoneProjectRepoDap
+from src.api.deps import DoneProjectRepoDap, AllDoneProjectParamsDap
 from src.core.schemas import (
     ReadDoneProjectModel,
     ReadAllDoneProjectsModel,
@@ -23,7 +23,9 @@ async def create_project(
 
 
 @done_projects_router.get("", response_model=ReadAllDoneProjectsModel)
-async def get_all_projects(project_repo: DoneProjectRepoDap, params: AllParamsDap):
+async def get_all_projects(
+    project_repo: DoneProjectRepoDap, params: AllDoneProjectParamsDap
+):
     projects, count = await project_repo.get_all(
         params["offset"], params["limit"], params["sort_by"], params["is_desc"]
     )
