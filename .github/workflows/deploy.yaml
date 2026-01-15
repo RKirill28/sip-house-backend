@@ -35,4 +35,6 @@ jobs:
           script: |
             cd /var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/
             touch .restart-app
+            cd api/
+            alembic upgrade head
             echo "Deploy finished successfully"
