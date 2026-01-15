@@ -1,4 +1,3 @@
-from pathlib import Path
 from uuid import UUID
 from fastapi import APIRouter, HTTPException, Query
 
@@ -12,10 +11,9 @@ from src.core.schemas import (
 )
 
 from src.api.deps import (
+    AllProjectParamsDap,
     FileWorkerServiceDap,
-    ImageRepoDap,
     ProjectRepoDap,
-    AllParamsDap,
 )
 from src.core.schemas import ReadAllProjectsModel
 
@@ -35,7 +33,7 @@ async def create_project(
 @projects_router.get("", response_model=ReadAllProjectsModel)
 async def get_all_projects(
     project_repo: ProjectRepoDap,
-    params: AllParamsDap,
+    params: AllProjectParamsDap,
 ):
     projects, count = await project_repo.get_all(
         params["offset"], params["limit"], params["sort_by"], params["is_desc"]
