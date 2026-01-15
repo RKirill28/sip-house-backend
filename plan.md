@@ -32,7 +32,7 @@
 - [x] Add params offset and limit for get_all_projects router:
   - [x] Add count of all projects from db to response and response model: { items: [], count: int }
   - [x] Add count and items model to done projects
-  - [ ] Add done projects router
+  - [x] Add done projects router
 - [x] Add sort_by(by description or by name, for example)
 - [x] Add desc param for reverse the sort
 - [x] Get random projects with limit param
@@ -45,5 +45,6 @@
 - [x] При удалении преоктов проходиться по его картинкам и удалять последовательно
 
 - Нужно чтобы я передавал depends, передавал туда сортировку и оно отдавало Enum
+- Нужно чтобы при загрузке картинок она сжималась
 
 Загрузка картинок: планиуреться загружать картинки отдельно от проектов.
