@@ -3,7 +3,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import delete, select, desc
+from sqlalchemy import func, select, desc
 
 from src.core.db.models import Base
 from src.core.enums import SortBy
@@ -48,9 +48,9 @@ class BaseRepository(Generic[T, P, S]):
         res = await self.session.execute(
             select(self.model).order_by(sort_by_param).offset(offset).limit(limit)
         )
-        count = await self.session.execute(select(self.model.id))
+        count = await self.session.execute(select(func.count()).select_from(self.model))
 
-        return (res.scalars().all(), len(count.scalars().all()))
+        return (res.scalars().all(), count.scalar_one())
 
     async def update(self, entity_id: UUID, update_model: MyBaseModel) -> T:
         entity = await self.get_by_id(entity_id)
