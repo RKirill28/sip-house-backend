@@ -43,6 +43,7 @@ class Settings(BaseSettings):
     db: DatabaseConfig
     BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
     UPLOADS_BASE_DIR: Path = BASE_DIR / "uploads"
+    IMAGE_MAX_WIDTH: int = 600
 
 
 settings = Settings()

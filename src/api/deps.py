@@ -1,4 +1,4 @@
-from typing import Annotated, Type, TypeVar, Generic
+from typing import Annotated, Type, TypeVar
 
 from fastapi import Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -10,8 +10,8 @@ from src.core.db.repositories import (
 )
 from src.core.db.helper import get_session
 from src.core.enums import DoneProjectSortBy, ProjectSortBy, SortBy
-from src.services.file_validator import GeneralValidatorService
-from src.services.saver import FileWorkerService
+from src.core.conifg import settings
+from src.services import FileWorkerService, ImageCompressor, GeneralValidatorService
 
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
@@ -52,8 +52,8 @@ def get_file_validator() -> GeneralValidatorService:
     return GeneralValidatorService()
 
 
-def get_file_saver() -> FileWorkerService:
-    return FileWorkerService()
+def get_file_worker() -> FileWorkerService:
+    return FileWorkerService(ImageCompressor(settings.IMAGE_MAX_WIDTH))
 
 
 ProjectRepoDap = Annotated[ProjectRepository, Depends(get_project_repo)]
@@ -66,4 +66,4 @@ AllDoneProjectParamsDap = Annotated[dict, Depends(get_params(DoneProjectSortBy))
 
 
 ValidatorServiceDap = Annotated[GeneralValidatorService, Depends(get_file_validator)]
-FileWorkerServiceDap = Annotated[FileWorkerService, Depends(get_file_saver)]
+FileWorkerServiceDap = Annotated[FileWorkerService, Depends(get_file_worker)]

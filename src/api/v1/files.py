@@ -11,7 +11,7 @@ files_router = APIRouter(prefix=settings.api.v1.files_prefix)
 
 @files_router.post("/upload")
 async def upload_file(
-    file_saver: FileWorkerServiceDap,
+    file_worker: FileWorkerServiceDap,
     file_validator: ValidatorServiceDap,
     files: list[UploadFile],
 ) -> dict:
@@ -23,7 +23,7 @@ async def upload_file(
 
     urls = []
     for file in files:
-        url = await file_saver.save(file)
+        url = await file_worker.save(file.filename, file.file)
         urls.append(url)
 
     return {"urls": urls}
