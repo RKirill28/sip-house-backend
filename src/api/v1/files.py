@@ -23,7 +23,7 @@ async def upload_file(
 
     urls = []
     for file in files:
-        url = await file_worker.save(file.filename, file.file)
+        url = await file_worker.save(file.filename, file.file)  # type: ignore
         urls.append(url)
 
     return {"urls": urls}
