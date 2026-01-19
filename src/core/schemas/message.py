@@ -8,7 +8,7 @@ from src.core.schemas.base import MyBaseModel
 
 
 class CreateMessageModel(MyBaseModel):
-    created_at: datetime = Field(alias="createdAt")
+    chat_id: int = Field(alias="chatId")
     username: str = Field(max_length=32)
     user_phone: str = Field(max_length=20, alias="userPhone")
     user_email: str = Field(max_length=100, alias="userEmail")

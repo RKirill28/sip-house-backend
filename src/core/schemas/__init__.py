@@ -17,21 +17,24 @@ from .done_project import (
     ReadAllDoneProjectsModel,
 )
 from .message import CreateMessageModel, ReadMessageModel
+from .chat import CreateChatModel, ReadChatModel
 
 
 __all__ = [
+    "CreateMessageModel",
+    "ReadMessageModel",
     "CreateProjectModel",
     "ReadProjectModel",
-    "CreateImageModel",
-    "ReadImageModel",
-    "CreateImageInDBModel",
+    "UpdateProjectPdfUrlModel",
+    "UpdateProjectModel",
+    "ReadAllProjectsModel",
     "CreateDoneProjectModel",
     "ReadAllDoneProjectsModel",
     "ReadDoneProjectModel",
-    "CreateMessageModel",
-    "ReadMessageModel",
-    "UpdateProjectPdfUrlModel",
-    "UpdateProjectModel",
     "UpdateImageUrlModel",
-    "ReadAllProjectsModel",
+    "CreateImageModel",
+    "ReadImageModel",
+    "CreateImageInDBModel",
+    "CreateChatModel",
+    "ReadChatModel",
 ]

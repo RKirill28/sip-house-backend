@@ -3,6 +3,7 @@ from .image import ImageRepository
 from .project import ProjectRepository
 from .done_project import DoneProjectRepository
 from .message import MessageRepository
+from .chat import ChatRepository
 
 __all__ = [
     "BaseRepository",
@@ -10,4 +11,5 @@ __all__ = [
     "ProjectRepository",
     "MessageRepository",
     "DoneProjectRepository",
+    "ChatRepository",
 ]

@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select, desc
 
 from src.core.db.models import Base
-from src.core.enums import SortBy
+from src.core.sort_by_enums import SortBy
 from src.core.schemas.base import MyBaseModel
 
 T = TypeVar("T", bound=Base)

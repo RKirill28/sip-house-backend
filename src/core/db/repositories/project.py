@@ -1,12 +1,10 @@
 from typing import Sequence
-from uuid import UUID
 
 from sqlalchemy import func, select
 
-from src.core.enums import ProjectSortBy
+from src.core.sort_by_enums import ProjectSortBy
 from src.core.schemas import (
     CreateProjectModel,
-    UpdateProjectModel,
     UpdateProjectPdfUrlModel,
 )
 from src.core.db.repositories import BaseRepository

@@ -1,0 +1,48 @@
+from enum import Enum
+
+from src.core.db.models.done_project import DoneProject
+from src.core.db.models.image import Image
+
+from src.core.db.models.project import Project
+from src.core.db.models.message import Message
+from src.core.db.models.chat import Chat
+
+
+class SortBy(Enum):
+    @property
+    def project_attr(self):
+        return super().value[-1]
+
+    @property
+    def value(self):
+        return super().value[0]
+
+
+class ProjectSortBy(SortBy):
+    NAME = ("name", Project.name)
+    DESCRIPTION = ("description", Project.description)
+    PRICE = ("price", Project.price)
+    PRICE_DESCRIPTION = ("price_description", Project.price_description)
+
+
+class ImageSortBy(SortBy):
+    NAME = ("name", Image.name)
+    DESCRIPTION = ("description", Image.description)
+
+
+class DoneProjectSortBy(SortBy):
+    NAME = ("name", DoneProject.name)
+    ADDRESS = ("address", DoneProject.address)
+
+
+class MessageSortBy(SortBy):
+    CREATED_AT = ("created_at", Message.created_at)
+    USERNAME = ("username", Message.username)
+    USER_PHONE = ("user_phone", Message.user_phone)
+    USER_EMAIL = ("user_email", Message.user_email)
+    COMMENT = ("comment", Message.comment)
+
+
+class ChatSortBy(SortBy):
+    USERNAME = ("username", Chat.username)
+    CHAT_ID = ("chat_id", Chat.chat_id)

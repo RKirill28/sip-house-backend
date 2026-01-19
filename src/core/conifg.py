@@ -44,6 +44,7 @@ class Settings(BaseSettings):
     BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent.parent
     UPLOADS_BASE_DIR: Path = BASE_DIR / "uploads"
     IMAGE_MAX_WIDTH: int = 600
+    TG_BOT_TOKEN: str
 
 
 settings = Settings()
