@@ -14,12 +14,11 @@ class Message(Base):
     __tablename__ = "messages"
 
     created_at: Mapped[datetime] = mapped_column(
-        default=datetime.timestamp,
+        # default=lambda: datetime.timestamp(),
         server_default=sqlalchemy.func.now(),
         server_onupdate=sqlalchemy.func.now(),
     )
     username: Mapped[str | None] = mapped_column(VARCHAR(32), default=None)
-    chat_id: Mapped[int]
     user_phone: Mapped[str] = mapped_column(VARCHAR(20))
     user_email: Mapped[str] = mapped_column(VARCHAR(100))
     object_type: Mapped[ObjectType]

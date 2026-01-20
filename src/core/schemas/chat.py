@@ -5,8 +5,8 @@ from pydantic import Field
 
 
 class CreateChatModel(MyBaseModel):
-    username: str | None = Field(None, max_length=32)
     chat_id: int
+    username: str | None = Field(None, max_length=32)
 
 
 class ReadChatModel(CreateChatModel):
