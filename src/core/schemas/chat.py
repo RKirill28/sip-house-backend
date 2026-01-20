@@ -9,5 +9,9 @@ class CreateChatModel(MyBaseModel):
     username: str | None = Field(None, max_length=32)
 
 
+class ChatModel(CreateChatModel):
+    pass
+
+
 class ReadChatModel(CreateChatModel):
     id: UUID

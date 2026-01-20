@@ -24,6 +24,8 @@ class ApiV1PrefixConfig(BaseModel):
     done_projects_prefix: str = "/done_projects"
     images_prefix: str = "/images"
     files_prefix: str = "/files"
+    messages_prefix: str = "/messages"
+    chats_prefix: str = "/chats"
 
 
 class ApiPrefixConfig(BaseModel):

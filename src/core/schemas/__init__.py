@@ -16,8 +16,8 @@ from .done_project import (
     ReadDoneProjectModel,
     ReadAllDoneProjectsModel,
 )
-from .message import CreateMessageModel, ReadMessageModel
-from .chat import CreateChatModel, ReadChatModel
+from .message import CreateMessageModel, ReadMessageModel, MessageModel
+from .chat import CreateChatModel, ReadChatModel, ChatModel
 
 
 __all__ = [
@@ -37,4 +37,6 @@ __all__ = [
     "CreateImageInDBModel",
     "CreateChatModel",
     "ReadChatModel",
+    "MessageModel",
+    "ChatModel",
 ]
