@@ -55,3 +55,10 @@
 - [ ] Tg bot для отправки сообщений досутпным юзера(админы)
 
 Загрузка картинок: планиуреться загружать картинки отдельно от проектов.
+
+- Добавить свойство public: boolean в модели project и done_project
+  в контрактах этого свойства не должно быть
+  при создании на POST api/v1/projects и POST api/v1/done_projects свойство по умолчанию на false, в реквест контракте оно необязательно
+  на PUT api/v1/projects и PUT api/v1/done_projects должна быт возмозможность это свойство изменить, в реквест контракте оно нужно
+  ручки GET api/v1/projects/ramdom, GET api/v1/done_projects/random выводят только то где public = true
+  ручки GET /api/v1/projects, GET api/v1/done_projects по умолчанию выводят только public=true, но должен быть фильтр позволяющий вывести public=false для админки
