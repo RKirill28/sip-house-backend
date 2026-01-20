@@ -7,9 +7,11 @@ from src.core.db.repositories import (
     ProjectRepository,
     ImageRepository,
     DoneProjectRepository,
+    ChatRepository,
 )
 from src.core.db.helper import get_session
-from src.core.enums import DoneProjectSortBy, ProjectSortBy, SortBy
+from src.core.db.repositories.message import MessageRepository
+from src.core.sort_by_enums import DoneProjectSortBy, ProjectSortBy, SortBy
 from src.core.conifg import settings
 from src.services import FileWorkerService, ImageCompressor, GeneralValidatorService
 
@@ -48,6 +50,10 @@ def get_done_projects_repo(session: SessionDep) -> DoneProjectRepository:
     return DoneProjectRepository(session)
 
 
+def get_mess_repo(session: SessionDep) -> MessageRepository:
+    return MessageRepository(session)
+
+
 def get_file_validator() -> GeneralValidatorService:
     return GeneralValidatorService()
 
@@ -56,9 +62,15 @@ def get_file_worker() -> FileWorkerService:
     return FileWorkerService(ImageCompressor(settings.IMAGE_MAX_WIDTH))
 
 
+def get_chat_repo(session: SessionDep) -> ChatRepository:
+    return ChatRepository(session)
+
+
 ProjectRepoDap = Annotated[ProjectRepository, Depends(get_project_repo)]
 ImageRepoDap = Annotated[ImageRepository, Depends(get_image_repo)]
 DoneProjectRepoDap = Annotated[DoneProjectRepository, Depends(get_done_projects_repo)]
+MessageRepoDap = Annotated[MessageRepository, Depends(get_mess_repo)]
+ChatRepoDap = Annotated[ChatRepository, Depends(get_chat_repo)]
 
 
 AllProjectParamsDap = Annotated[dict, Depends(get_params(ProjectSortBy))]

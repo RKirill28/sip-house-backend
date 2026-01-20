@@ -17,6 +17,7 @@ dependencies = [
     "pyright>=1.1.407",
     "python-magic>=0.4.27",
     "python-multipart>=0.0.21",
+    "python-telegram-bot>=22.5",
     "sqlalchemy>=2.0.45",
     "typing-extensions>=4.15.0",
     "uvicorn>=0.40.0",
