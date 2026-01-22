@@ -61,6 +61,18 @@ class BaseRepository(Generic[T, P, S]):
 
         return (res.scalars().all(), count.scalar_one())
 
+    async def get_random(self, limit: int, **filters) -> Sequence[T]:
+        stmt_filters = []
+        if filters:
+            for k, v in filters.items():
+                if hasattr(self.model, k) and getattr(self.model, k):
+                    stmt_filters.append(getattr(self.model, k) == v)
+
+        projects = await self.session.execute(
+            select(self.model).where(*stmt_filters).order_by(func.rand()).limit(limit)
+        )
+        return projects.scalars().all()
+
     async def update(self, entity_id: UUID, update_model: MyBaseModel) -> T:
         entity = await self.get_by_id(entity_id)
         update_model_dict = update_model.model_dump()

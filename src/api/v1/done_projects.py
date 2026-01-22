@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from src.core.conifg import settings
 
@@ -34,3 +34,10 @@ async def get_all(project_repo: DoneProjectRepoDap, params: AllDoneProjectParams
     items = [ReadDoneProjectModel.model_validate(p) for p in projects]
 
     return ReadAllDoneProjectsModel(items=items, count=count)
+
+
+@done_projects_router.get("/random", response_model=list[ReadDoneProjectModel])
+async def get_random(
+    project_repo: DoneProjectRepoDap, limit: int = Query(5), public: bool = Query()
+):
+    return await project_repo.get_random(limit, public=public)
