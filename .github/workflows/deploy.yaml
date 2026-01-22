@@ -21,10 +21,7 @@ jobs:
           source: "./*"
           rm: false
           target: "/var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/api"
-          exclude: |
-            uploads/
-            .git/
-            .github/
+          exclude: ".env,uploads/,.git/,.github/"
 
       - name: Post-deploy commands (Cleanup & Restart)
         uses: appleboy/ssh-action@master
@@ -34,7 +31,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/
-            touch .restart-app
+            source .venv/bin/activate
             cd api/
             alembic upgrade head
+            touch .restart-app
             echo "Deploy finished successfully"
