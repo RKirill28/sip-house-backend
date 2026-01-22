@@ -21,7 +21,6 @@ jobs:
           source: "./*"
           rm: false
           target: "/var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/api"
-          exclude: ".env,uploads/,.git/,.github/"
 
       - name: Post-deploy commands (Cleanup & Restart)
         uses: appleboy/ssh-action@master
