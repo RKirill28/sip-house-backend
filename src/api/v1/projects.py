@@ -34,7 +34,11 @@ async def get_all(
     params: AllProjectParamsDap,
 ):
     projects, count = await project_repo.get_all(
-        params["offset"], params["limit"], params["sort_by"], params["is_desc"]
+        params["offset"],
+        params["limit"],
+        params["sort_by"],
+        params["is_desc"],
+        public=params["public"],
     )
     items = [ReadProjectModel.model_validate(p) for p in projects]
 

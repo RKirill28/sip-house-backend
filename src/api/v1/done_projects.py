@@ -25,7 +25,11 @@ async def create(
 @done_projects_router.get("", response_model=ReadAllDoneProjectsModel)
 async def get_all(project_repo: DoneProjectRepoDap, params: AllDoneProjectParamsDap):
     projects, count = await project_repo.get_all(
-        params["offset"], params["limit"], params["sort_by"], params["is_desc"]
+        params["offset"],
+        params["limit"],
+        params["sort_by"],
+        params["is_desc"],
+        public=params["public"],
     )
     items = [ReadDoneProjectModel.model_validate(p) for p in projects]
 

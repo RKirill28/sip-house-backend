@@ -58,7 +58,37 @@
 
 - Добавить свойство public: boolean в модели project и done_project
   в контрактах этого свойства не должно быть
-  при создании на POST api/v1/projects и POST api/v1/done_projects свойство по умолчанию на false, в реквест контракте оно необязательно
-  на PUT api/v1/projects и PUT api/v1/done_projects должна быт возмозможность это свойство изменить, в реквест контракте оно нужно
+
+  при создании на POST api/v1/projects и POST api/v1/done_projects свойство по умолчанию на false,
+  в реквест контракте оно необязательно
+
+  на PUT api/v1/projects и PUT api/v1/done_projects должна быт возмозможность это свойство изменить,
+  в реквест контракте оно нужно
+
   ручки GET api/v1/projects/ramdom, GET api/v1/done_projects/random выводят только то где public = true
-  ручки GET /api/v1/projects, GET api/v1/done_projects по умолчанию выводят только public=true, но должен быть фильтр позволяющий вывести public=false для админки
+
+  ручки GET /api/v1/projects, GET api/v1/done_projects по умолчанию выводят только public=true,
+  но должен быть фильтр позволяющий вывести public=false для админки
+
+## Как решить проблему с ветвлением гит и различными версиямиями бд между ветками:
+
+- Если нужно перейти в другую ветку где все еще старые модели, то нужно делать downgrade на общего предка:
+  То есть в старой ветке получить последнюю версию:
+
+```bash
+alembic heads
+```
+
+Потом перейти в более новую и выполнить:
+
+```bash
+alembic downgrade <head_version_id>
+```
+
+Далее когда придет время сливать ветки, ты просто сливаешь их как обычно.
+Но алембик не повзолит тебе сделать upgrade head, ведь теперь он тоже имеет две цепочки развития.
+Нужно делать слияние веток alembic:
+
+```bash
+alembic merge -m "merge main and work heads" head1_id head2_id
+```

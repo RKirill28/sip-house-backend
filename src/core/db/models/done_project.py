@@ -9,6 +9,7 @@ class DoneProject(Base):
 
     name: Mapped[str] = mapped_column(String(32))
     address: Mapped[str] = mapped_column(String(32))
+    public: Mapped[bool] = mapped_column(default=False)
 
     images: Mapped[list["Image"]] = relationship(
         back_populates="done_project", cascade="all, delete-orphan", lazy="selectin"
