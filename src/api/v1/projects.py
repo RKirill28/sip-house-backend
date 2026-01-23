@@ -38,7 +38,6 @@ async def get_all(
         params["limit"],
         params["sort_by"],
         params["is_desc"],
-        public=params["public"],
     )
     items = [ReadProjectModel.model_validate(p) for p in projects]
 
@@ -60,10 +59,8 @@ async def add_pdf_urls(
 
 
 @projects_router.get("/random", response_model=list[ReadProjectModel])
-async def get_random(
-    project_repo: ProjectRepoDap, limit: int = Query(5), public: bool = Query(5)
-):
-    return await project_repo.get_random(limit, public=public)
+async def get_random(project_repo: ProjectRepoDap, limit: int = Query(5)):
+    return await project_repo.get_random(limit)
 
 
 @projects_router.put("/{project_id}", response_model=ReadProjectModel)

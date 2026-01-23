@@ -24,14 +24,12 @@ class UpdateProjectModel(MyBaseModel):
     price_description: str | None = Field(
         None, max_length=255, alias="priceDescription"
     )
-    public: bool | None = None
 
 
 class ReadProjectModel(CreateProjectModel):
     id: UUID
     images: list[ReadImageModel] | None = None
     pdf_urls: list[str] | None = Field(default=None, alias="pdfUrls")
-    public: bool
 
 
 class ReadAllProjectsModel(MyBaseModel):

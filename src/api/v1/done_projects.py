@@ -29,7 +29,6 @@ async def get_all(project_repo: DoneProjectRepoDap, params: AllDoneProjectParams
         params["limit"],
         params["sort_by"],
         params["is_desc"],
-        public=params["public"],
     )
     items = [ReadDoneProjectModel.model_validate(p) for p in projects]
 
@@ -37,7 +36,5 @@ async def get_all(project_repo: DoneProjectRepoDap, params: AllDoneProjectParams
 
 
 @done_projects_router.get("/random", response_model=list[ReadDoneProjectModel])
-async def get_random(
-    project_repo: DoneProjectRepoDap, limit: int = Query(5), public: bool = Query()
-):
-    return await project_repo.get_random(limit, public=public)
+async def get_random(project_repo: DoneProjectRepoDap, limit: int = Query(5)):
+    return await project_repo.get_random(limit)
