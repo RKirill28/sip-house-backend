@@ -25,7 +25,7 @@ def get_params(sort_enum: Type[T]):
         limit: int = Query(10),
         sort_by: sort_enum = Query(),  # type: ignore
         is_desc: bool = Query(False),
-        public: bool = Query(True),
+        public: bool | None = Query(None),
     ) -> dict:
         return {
             "offset": offset,

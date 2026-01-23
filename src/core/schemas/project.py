@@ -24,7 +24,7 @@ class UpdateProjectModel(MyBaseModel):
     price_description: str | None = Field(
         None, max_length=255, alias="priceDescription"
     )
-    public: bool
+    public: bool | None = None
 
 
 class ReadProjectModel(CreateProjectModel):

@@ -57,7 +57,9 @@ class BaseRepository(Generic[T, P, S]):
         stmt = stmt.order_by(sort_by_param).offset(offset).limit(limit)
 
         res = await self.session.execute(stmt)
-        count = await self.session.execute(select(func.count()).select_from(self.model))
+        count = await self.session.execute(
+            select(func.count()).select_from(self.model).where(*stmt_filters)
+        )
 
         return (res.scalars().all(), count.scalar_one())
 
