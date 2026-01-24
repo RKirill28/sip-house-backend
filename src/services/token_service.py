@@ -28,12 +28,6 @@ class TokenPayload(TypedDict):
 
 
 @dataclass(frozen=True)
-class Tokens:
-    access_token: AccessToken
-    refresh_token: RefreshToken
-
-
-@dataclass(frozen=True)
 class AccessTokenPayload:
     admin_id: uuid.UUID
     username: str
@@ -50,11 +44,6 @@ class JWTToken:
             max_age=settings.ACCESS_TOKEN_MAX_AGE_IN_MINUTES * 60,
             expires=expires,
         )
-        # refresh_token = RefreshToken(
-        #     token=uuid.uuid4(),
-        #     max_age=settings.REFRESH_TOKEN_MAX_AGE_IN_MINUTES * 60,
-        #     expires=cls.get_max_age_date(settings.REFRESH_TOKEN_MAX_AGE_IN_MINUTES),
-        # )
 
         return access_token
 

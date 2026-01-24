@@ -40,25 +40,3 @@ class AuthService:
         if not check_password:
             raise InvalidCredentials
         return admin.id
-
-    # async def register(self, username: str, password: str) -> UUID:
-    #     password = Hasher.hash_password(password)
-    #
-    #     try:
-    #         new = await self.admin_repo.create(
-    #             CreateAdmin(username=username, password=password)
-    #         )
-    #     except IntegrityError:
-    #         raise UsernameIsAlreadyTaken
-    #
-    #     return new.id
-    #
-    # async def refresh_tokens(self, cookie_refresh_token: UUID) -> UUID:
-    #     admin = await self.admin_repo.get_by_refresh_token(cookie_refresh_token)
-    #     if not admin.expires_token:
-    #         raise NoRefreshToken
-    #     else:
-    #         token_expires = admin.expires_token.replace(tzinfo=timezone.utc)
-    #         if token_expires <= datetime.now(tz=timezone.utc):
-    #             raise RefreshTokenHasExpired
-    #         return admin.id
