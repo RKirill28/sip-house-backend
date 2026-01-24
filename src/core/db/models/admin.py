@@ -1,9 +1,8 @@
 from .base import Base
 
 from datetime import datetime
-from uuid import UUID
 
-from sqlalchemy import VARCHAR, String
+from sqlalchemy import String
 from sqlalchemy.dialects.mysql import TEXT
 from sqlalchemy.orm import Mapped, mapped_column
 
