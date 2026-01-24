@@ -77,6 +77,7 @@ class FileWorkerService:
             file = self._image_compressor.compress_image(file, file_type)
             file.seek(0)
 
+        file.seek(0)
         with open(file_path, "wb") as f:
             f.write(file.read())
 

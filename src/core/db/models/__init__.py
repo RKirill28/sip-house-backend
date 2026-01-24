@@ -5,5 +5,6 @@ from .project import Project
 from .image import Image
 from .done_project import DoneProject
 from .message import Message
+from .admin import Admin
 
-__all__ = ["Base", "Project", "Image", "DoneProject", "Message"]
+__all__ = ["Base", "Project", "Image", "DoneProject", "Message", "Admin"]

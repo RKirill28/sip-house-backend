@@ -9,21 +9,21 @@ from src.core.schemas import (
 )
 from src.core.conifg import settings
 
-from src.api.deps import FileWorkerServiceDap, ImageRepoDap
+from src.api.deps import AdminDap, FileWorkerServiceDap, ImageRepoDap
 
 
 images_router = APIRouter(prefix=settings.api.v1.images_prefix)
 
 
 @images_router.post("", response_model=ReadImageModel)
-async def create(image_repo: ImageRepoDap, create_image: CreateImageModel):
+async def create(image_repo: ImageRepoDap, create_image: CreateImageModel, _: AdminDap):
     new = await image_repo.create(create_image)
     return new
 
 
 @images_router.put("/add_image_urls", response_model=list[ReadImageModel])
 async def add_image_ulrs(
-    image_repo: ImageRepoDap, update_model: list[UpdateImageUrlModel]
+    image_repo: ImageRepoDap, update_model: list[UpdateImageUrlModel], _: AdminDap
 ):
     res = []
     for model in update_model:
@@ -39,7 +39,10 @@ async def add_image_ulrs(
 
 @images_router.delete("/{image_id}")
 async def delete_by_id(
-    image_repo: ImageRepoDap, file_worker: FileWorkerServiceDap, image_id: UUID
+    image_repo: ImageRepoDap,
+    file_worker: FileWorkerServiceDap,
+    image_id: UUID,
+    _: AdminDap,
 ):
     try:
         image = await image_repo.remove(image_id)

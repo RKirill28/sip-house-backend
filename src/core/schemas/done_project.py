@@ -13,10 +13,12 @@ class CreateDoneProjectModel(MyBaseModel):
 class ReadDoneProjectModel(CreateDoneProjectModel):
     id: UUID
     images: list[ReadImageModel]
+    public: bool
 
 
 class UpdateDoneProjectModel(CreateDoneProjectModel):
     id: UUID
+    public: bool
 
 
 class ReadAllDoneProjectsModel(MyBaseModel):

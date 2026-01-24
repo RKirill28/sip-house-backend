@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 
 from src.core.conifg import settings
 
-from src.api.deps import DoneProjectRepoDap, AllDoneProjectParamsDap
+from src.api.deps import DoneProjectRepoDap, AllDoneProjectParamsDap, OptionalAdminDap
 from src.core.schemas import (
     ReadDoneProjectModel,
     ReadAllDoneProjectsModel,
@@ -23,12 +23,21 @@ async def create(
 
 
 @done_projects_router.get("", response_model=ReadAllDoneProjectsModel)
-async def get_all(project_repo: DoneProjectRepoDap, params: AllDoneProjectParamsDap):
+async def get_all(
+    project_repo: DoneProjectRepoDap,
+    params: AllDoneProjectParamsDap,
+    admin_dap: OptionalAdminDap,
+):
+    filters = {}
+    if not admin_dap:
+        filters["public"] = True
+
     projects, count = await project_repo.get_all(
         params["offset"],
         params["limit"],
         params["sort_by"],
         params["is_desc"],
+        **filters,
     )
     items = [ReadDoneProjectModel.model_validate(p) for p in projects]
 
@@ -37,4 +46,4 @@ async def get_all(project_repo: DoneProjectRepoDap, params: AllDoneProjectParams
 
 @done_projects_router.get("/random", response_model=list[ReadDoneProjectModel])
 async def get_random(project_repo: DoneProjectRepoDap, limit: int = Query(5)):
-    return await project_repo.get_random(limit)
+    return await project_repo.get_random(limit, public=True)

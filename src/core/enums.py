@@ -48,3 +48,7 @@ class MessageSortBy(SortBy):
     # USER_PHONE = ("user_phone", Message.user_phone)
     # USER_EMAIL = ("user_email", Message.user_email)
     # COMMENT = ("comment", Message.comment)
+
+
+class AdmibSortBy(SortBy):
+    pass

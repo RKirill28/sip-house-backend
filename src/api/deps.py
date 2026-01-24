@@ -1,6 +1,8 @@
 from typing import Annotated, Type, TypeVar
+from uuid import UUID
 
-from fastapi import Depends, Query
+from fastapi import Cookie, Depends, HTTPException, Header, Query, Request
+import jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.core.db.repositories import (
@@ -9,9 +11,12 @@ from src.core.db.repositories import (
     DoneProjectRepository,
 )
 from src.core.db.helper import get_session
+from src.core.db.repositories.admin import AdminRepository
 from src.core.enums import DoneProjectSortBy, ProjectSortBy, SortBy
 from src.core.conifg import settings
 from src.services import FileWorkerService, ImageCompressor, GeneralValidatorService
+from src.services.auth import AuthService
+from src.services.token_service import JWTToken
 
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
@@ -48,6 +53,10 @@ def get_done_projects_repo(session: SessionDep) -> DoneProjectRepository:
     return DoneProjectRepository(session)
 
 
+def get_admin_repo(session: SessionDep) -> AdminRepository:
+    return AdminRepository(session)
+
+
 def get_file_validator() -> GeneralValidatorService:
     return GeneralValidatorService()
 
@@ -59,6 +68,7 @@ def get_file_worker() -> FileWorkerService:
 ProjectRepoDap = Annotated[ProjectRepository, Depends(get_project_repo)]
 ImageRepoDap = Annotated[ImageRepository, Depends(get_image_repo)]
 DoneProjectRepoDap = Annotated[DoneProjectRepository, Depends(get_done_projects_repo)]
+AdminRepoDap = Annotated[AdminRepository, Depends(get_admin_repo)]
 
 
 AllProjectParamsDap = Annotated[dict, Depends(get_params(ProjectSortBy))]
@@ -67,3 +77,46 @@ AllDoneProjectParamsDap = Annotated[dict, Depends(get_params(DoneProjectSortBy))
 
 ValidatorServiceDap = Annotated[GeneralValidatorService, Depends(get_file_validator)]
 FileWorkerServiceDap = Annotated[FileWorkerService, Depends(get_file_worker)]
+
+
+def get_auth_service(admin_repo: AdminRepoDap) -> AuthService:
+    return AuthService(admin_repo)
+
+
+AuthServiceDap = Annotated[AuthService, Depends(get_auth_service)]
+
+
+def get_admin(
+    authorization: Annotated[str | None, Header(alias="Authorization")] = None,
+) -> UUID:
+    if authorization is None:
+        raise HTTPException(401, "Unauthorized")
+
+    if authorization.lower().startswith("bearer "):
+        authorization = authorization.lower().replace("bearer ", "")
+
+    try:
+        verified = JWTToken.verify_token(authorization)
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(401, "Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(401, "Unauthorized")
+
+    sub = verified.get("sub")
+    if not sub:
+        raise HTTPException(401, "No token")
+    return UUID(sub)
+
+
+def get_optional_admin(
+    authorization: Annotated[str | None, Header(alias="Authorization")] = None,
+) -> bool:
+    try:
+        get_admin(authorization)
+        return True
+    except HTTPException:
+        return False
+
+
+AdminDap = Annotated[UUID, Depends(get_admin)]
+OptionalAdminDap = Annotated[bool, Depends(get_optional_admin)]
