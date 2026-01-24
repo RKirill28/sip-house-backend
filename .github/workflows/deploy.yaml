@@ -32,6 +32,7 @@ jobs:
             cd /var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/
             source .venv/bin/activate
             cd api/
+            pip install -e .
             alembic upgrade head
             touch .restart-app
             echo "Deploy finished successfully"
