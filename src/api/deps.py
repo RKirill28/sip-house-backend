@@ -92,8 +92,7 @@ def get_admin(
     if authorization is None:
         raise HTTPException(401, "Unauthorized")
 
-    if authorization.lower().startswith("bearer "):
-        authorization = authorization.lower().replace("bearer ", "")
+    authorization = authorization.strip().replace("Bearer ", "")
 
     try:
         verified = JWTToken.verify_token(authorization)
