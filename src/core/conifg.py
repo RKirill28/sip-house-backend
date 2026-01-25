@@ -43,12 +43,9 @@ class Settings(BaseSettings):
     api: ApiPrefixConfig = ApiPrefixConfig()
     db: DatabaseConfig
 
-    hash_salt: str = "kp2008_!"
-    token_secret: str = "test"
     admin_username: str = "admin"
-    admin_pass: str = "admin"
+    admin_pass: str = "admin123"
     ACCESS_TOKEN_MAX_AGE_IN_MINUTES: int = 1440
-    # REFRESH_TOKEN_MAX_AGE_IN_MINUTES: int = 60
 
     BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent.parent
     UPLOADS_BASE_DIR: Path = BASE_DIR / "uploads"

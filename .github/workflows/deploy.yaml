@@ -33,6 +33,7 @@ jobs:
             source .venv/bin/activate
             cd api/
             pip install -e .
+            python init_admin.py
             alembic upgrade head
             touch .restart-app
             echo "Deploy finished successfully"
