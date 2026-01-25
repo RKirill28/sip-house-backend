@@ -20,6 +20,7 @@ def create_all():
         password = Hasher.hash_password(settings.admin_pass)
         if admin:
             admin.password = password
+            admin.username = settings.admin_username
         else:
             admin = Admin(username="admin", password=password)
             session.add(admin)
