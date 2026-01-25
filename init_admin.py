@@ -14,7 +14,7 @@ def create_all():
     Base.metadata.create_all(bind=sync_engine)
     with Session(sync_engine) as session:
         admin = session.execute(
-            select(Admin).where(Admin.username == settings.admin_pass)
+            select(Admin).where(Admin.username == settings.admin_username)
         ).scalar_one_or_none()
 
         password = Hasher.hash_password(settings.admin_pass)
