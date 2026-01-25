@@ -16,7 +16,7 @@ from src.core.db.models.base import MyUUID
 
 # revision identifiers, used by Alembic.
 revision: str = "f17e41f7b17e"
-down_revision: Union[str, Sequence[str], None] = "352b23c85a87"
+down_revision: Union[str, Sequence[str], None] = "cc6c36b6444e"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
