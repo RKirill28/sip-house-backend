@@ -43,8 +43,9 @@ class Settings(BaseSettings):
     api: ApiPrefixConfig = ApiPrefixConfig()
     db: DatabaseConfig
 
+    token_secret: str = "h+eCFlT=mF%Q(!36~W5~n8;=[sY#17[&hQ]ejeuICR5LLHRK17"
     admin_username: str = "admin"
-    admin_pass: str = "admin123"
+    admin_pass: str = "admin1234"
     ACCESS_TOKEN_MAX_AGE_IN_MINUTES: int = 1440
 
     BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent.parent

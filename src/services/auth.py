@@ -1,11 +1,7 @@
-from datetime import timezone, datetime
 from uuid import UUID
 
 from src.core.db.repositories.admin import AdminRepository
 from src.services.hasher import Hasher
-from src.core.schemas import CreateAdmin
-
-from sqlalchemy.exc import IntegrityError
 
 
 class InvalidCredentials(Exception):
@@ -22,9 +18,6 @@ class RefreshTokenHasExpired(Exception):
 
 class NoRefreshToken(Exception):
     """Автор не имеет Refresh токена"""
-
-
-UserId = int
 
 
 class AuthService:
