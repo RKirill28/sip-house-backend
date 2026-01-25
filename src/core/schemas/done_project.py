@@ -17,7 +17,6 @@ class ReadDoneProjectModel(CreateDoneProjectModel):
 
 
 class UpdateDoneProjectModel(CreateDoneProjectModel):
-    id: UUID
     public: bool
 
 

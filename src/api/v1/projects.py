@@ -116,7 +116,6 @@ async def delete(
 async def get_by_id(project_repo: ProjectRepoDap, project_id: UUID):
     try:
         project = await project_repo.get_by_id(project_id)
+        return project
     except NoEntityByIdFound:
         raise HTTPException(404, "No project found by id.")
-
-    return project

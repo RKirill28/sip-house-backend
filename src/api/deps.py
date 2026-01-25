@@ -86,6 +86,10 @@ def get_auth_service(admin_repo: AdminRepoDap) -> AuthService:
 AuthServiceDap = Annotated[AuthService, Depends(get_auth_service)]
 
 
+class TokenExpiredError(Exception):
+    """Время жизни токена истекло"""
+
+
 def get_admin(
     authorization: Annotated[str | None, Header(alias="Authorization")] = None,
 ) -> UUID:
@@ -99,7 +103,7 @@ def get_admin(
     except jwt.ExpiredSignatureError:
         raise HTTPException(401, "Token expired")
     except jwt.InvalidTokenError:
-        raise HTTPException(401, "Unauthorized")
+        raise HTTPException(401, "Invalid token")
 
     sub = verified.get("sub")
     if not sub:
@@ -110,11 +114,11 @@ def get_admin(
 def get_optional_admin(
     authorization: Annotated[str | None, Header(alias="Authorization")] = None,
 ) -> bool:
-    try:
-        get_admin(authorization)
-        return True
-    except HTTPException:
+    if authorization is None:
         return False
+
+    get_admin(authorization)
+    return True
 
 
 AdminDap = Annotated[UUID, Depends(get_admin)]

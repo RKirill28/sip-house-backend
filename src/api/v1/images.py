@@ -17,6 +17,8 @@ images_router = APIRouter(prefix=settings.api.v1.images_prefix)
 
 @images_router.post("", response_model=ReadImageModel)
 async def create(image_repo: ImageRepoDap, create_image: CreateImageModel, _: AdminDap):
+    if create_image.done_project_id and create_image.project_id:
+        raise HTTPException(433, "You can specify either project_id or done_project_id")
     new = await image_repo.create(create_image)
     return new
 
