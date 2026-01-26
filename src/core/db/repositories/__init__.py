@@ -4,6 +4,7 @@ from .project import ProjectRepository
 from .done_project import DoneProjectRepository
 from .message import MessageRepository
 from .chat import ChatRepository
+from .admin import AdminRepository
 
 __all__ = [
     "BaseRepository",
@@ -12,4 +13,5 @@ __all__ = [
     "MessageRepository",
     "DoneProjectRepository",
     "ChatRepository",
+    "AdminRepository",
 ]

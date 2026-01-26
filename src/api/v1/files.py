@@ -3,7 +3,7 @@ from fastapi import APIRouter, UploadFile, HTTPException
 from src.core.conifg import settings
 from src.services.file_validator import GeneralValidationError
 
-from src.api.deps import FileWorkerServiceDap, ValidatorServiceDap
+from src.api.deps import AdminDap, FileWorkerServiceDap, ValidatorServiceDap
 
 
 files_router = APIRouter(prefix=settings.api.v1.files_prefix)
@@ -14,6 +14,7 @@ async def upload_file(
     file_worker: FileWorkerServiceDap,
     file_validator: ValidatorServiceDap,
     files: list[UploadFile],
+    _: AdminDap,
 ) -> dict:
     try:
         for file in files:

@@ -11,8 +11,10 @@ from src.core.schemas import (
 )
 
 from src.api.deps import (
+    AdminDap,
     AllProjectParamsDap,
     FileWorkerServiceDap,
+    OptionalAdminDap,
     ProjectRepoDap,
 )
 from src.core.schemas import ReadAllProjectsModel
@@ -22,7 +24,11 @@ projects_router = APIRouter(prefix=settings.api.v1.projects_prefix)
 
 
 @projects_router.post("", response_model=ReadProjectModel)
-async def create(project_repo: ProjectRepoDap, create_project: CreateProjectModel):
+async def create(
+    project_repo: ProjectRepoDap,
+    create_project: CreateProjectModel,
+    _: AdminDap,
+):
     new = await project_repo.create(create_project)
     await project_repo.session.commit()
     return new
@@ -32,9 +38,18 @@ async def create(project_repo: ProjectRepoDap, create_project: CreateProjectMode
 async def get_all(
     project_repo: ProjectRepoDap,
     params: AllProjectParamsDap,
+    admin_dap: OptionalAdminDap,
 ):
+    filters = {}
+    if not admin_dap:
+        filters["public"] = True
+
     projects, count = await project_repo.get_all(
-        params["offset"], params["limit"], params["sort_by"], params["is_desc"]
+        params["offset"],
+        params["limit"],
+        params["sort_by"],
+        params["is_desc"],
+        **filters,
     )
     items = [ReadProjectModel.model_validate(p) for p in projects]
 
@@ -45,6 +60,7 @@ async def get_all(
 async def add_pdf_urls(
     project_repo: ProjectRepoDap,
     update_model: UpdateProjectPdfUrlModel,
+    _: AdminDap,
 ):
     try:
         project = await project_repo.update_pdf_url(update_model)
@@ -57,12 +73,15 @@ async def add_pdf_urls(
 
 @projects_router.get("/random", response_model=list[ReadProjectModel])
 async def get_random(project_repo: ProjectRepoDap, limit: int = Query(5)):
-    return await project_repo.get_random(limit)
+    return await project_repo.get_random(limit, public=True)
 
 
 @projects_router.put("/{project_id}", response_model=ReadProjectModel)
 async def update(
-    project_repo: ProjectRepoDap, project_id: UUID, update_model: UpdateProjectModel
+    project_repo: ProjectRepoDap,
+    project_id: UUID,
+    update_model: UpdateProjectModel,
+    _: AdminDap,
 ):
     try:
         res = await project_repo.update(project_id, update_model)
@@ -77,6 +96,7 @@ async def delete(
     project_repo: ProjectRepoDap,
     file_worker: FileWorkerServiceDap,
     project_id: UUID,
+    _: AdminDap,
 ):
     try:
         project = await project_repo.get_by_id(project_id)
@@ -96,7 +116,6 @@ async def delete(
 async def get_by_id(project_repo: ProjectRepoDap, project_id: UUID):
     try:
         project = await project_repo.get_by_id(project_id)
+        return project
     except NoEntityByIdFound:
         raise HTTPException(404, "No project found by id.")
-
-    return project

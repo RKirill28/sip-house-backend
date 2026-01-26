@@ -1,7 +1,3 @@
-from typing import Sequence
-
-from sqlalchemy import func, select
-
 from src.core.sort_by_enums import ProjectSortBy
 from src.core.schemas import (
     CreateProjectModel,
@@ -18,9 +14,3 @@ class ProjectRepository(BaseRepository[Project, CreateProjectModel, ProjectSortB
         project = await self.get_by_id(update_model.id)
         project.pdf_urls = update_model.pdf_urls
         return project
-
-    async def get_random(self, limit: int) -> Sequence[Project]:
-        projects = await self.session.execute(
-            select(Project).order_by(func.rand()).limit(limit)
-        )
-        return projects.scalars().all()

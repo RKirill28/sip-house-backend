@@ -26,6 +26,7 @@ class ApiV1PrefixConfig(BaseModel):
     files_prefix: str = "/files"
     messages_prefix: str = "/messages"
     chats_prefix: str = "/chats"
+    auth_prefix: str = "/auth"
 
 
 class ApiPrefixConfig(BaseModel):
@@ -43,6 +44,12 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     api: ApiPrefixConfig = ApiPrefixConfig()
     db: DatabaseConfig
+
+    token_secret: str = "h+eCFlT=mF%Q(!36~W5~n8;=[sY#17[&hQ]ejeuICR5LLHRK17"
+    admin_username: str = "admin"
+    admin_pass: str = "admin1234"
+    ACCESS_TOKEN_MAX_AGE_IN_MINUTES: int = 1440
+
     BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent.parent
     UPLOADS_BASE_DIR: Path = BASE_DIR / "uploads"
     IMAGE_MAX_WIDTH: int = 600

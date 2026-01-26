@@ -38,19 +38,42 @@ class BaseRepository(Generic[T, P, S]):
         return res
 
     async def get_all(
-        self, offset: int, limit: int, sort_by: S, is_desc: bool
+        self, offset: int, limit: int, sort_by: S, is_desc: bool, **filters
     ) -> tuple[Sequence[T], int]:
         if is_desc:
             sort_by_param = desc(sort_by.project_attr)
         else:
             sort_by_param = sort_by.project_attr
 
-        res = await self.session.execute(
-            select(self.model).order_by(sort_by_param).offset(offset).limit(limit)
+        stmt = select(self.model)
+
+        stmt_filters = []
+        if filters:
+            for k, v in filters.items():
+                if hasattr(self.model, k) and getattr(self.model, k):
+                    stmt_filters.append(getattr(self.model, k) == v)
+
+        stmt = stmt.where(*stmt_filters)
+        stmt = stmt.order_by(sort_by_param).offset(offset).limit(limit)
+
+        res = await self.session.execute(stmt)
+        count = await self.session.execute(
+            select(func.count()).select_from(self.model).where(*stmt_filters)
         )
-        count = await self.session.execute(select(func.count()).select_from(self.model))
 
         return (res.scalars().all(), count.scalar_one())
+
+    async def get_random(self, limit: int, **filters) -> Sequence[T]:
+        stmt_filters = []
+        if filters:
+            for k, v in filters.items():
+                if hasattr(self.model, k) and getattr(self.model, k):
+                    stmt_filters.append(getattr(self.model, k) == v)
+
+        projects = await self.session.execute(
+            select(self.model).where(*stmt_filters).order_by(func.rand()).limit(limit)
+        )
+        return projects.scalars().all()
 
     async def update(self, entity_id: UUID, update_model: MyBaseModel) -> T:
         entity = await self.get_by_id(entity_id)

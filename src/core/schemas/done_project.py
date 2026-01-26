@@ -1,3 +1,4 @@
+from uuid import UUID
 from pydantic import Field
 
 from src.core.schemas.base import MyBaseModel
@@ -10,7 +11,13 @@ class CreateDoneProjectModel(MyBaseModel):
 
 
 class ReadDoneProjectModel(CreateDoneProjectModel):
+    id: UUID
     images: list[ReadImageModel]
+    public: bool
+
+
+class UpdateDoneProjectModel(CreateDoneProjectModel):
+    public: bool
 
 
 class ReadAllDoneProjectsModel(MyBaseModel):

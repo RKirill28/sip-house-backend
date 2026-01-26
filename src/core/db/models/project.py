@@ -12,6 +12,8 @@ class Project(Base):
     price: Mapped[float] = mapped_column(DECIMAL(10, 2))
     price_description: Mapped[str] = mapped_column(String(255))
     pdf_urls: Mapped[list[str] | None] = mapped_column(JSON, default=None)
+    public: Mapped[bool] = mapped_column(default=False)
+
     images: Mapped[list["Image"]] = relationship(
         back_populates="project",
         cascade="all, delete-orphan",
