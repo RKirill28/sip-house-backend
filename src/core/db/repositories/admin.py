@@ -1,14 +1,13 @@
-from uuid import UUID
 from sqlalchemy import select
 
 from src.core.db.models import Admin
 from src.core.db.repositories.base import NoEntityByIdFound
-from src.core.enums import AdmibSortBy
+from src.core.sort_by_enums import AdminSortBy
 from src.core.schemas import CreateAdmin, UpdateAdminToken
 from src.core.db.repositories import BaseRepository
 
 
-class AdminRepository(BaseRepository[Admin, CreateAdmin, AdmibSortBy]):
+class AdminRepository(BaseRepository[Admin, CreateAdmin, AdminSortBy]):
     model = Admin
 
     async def get_by_username(self, username: str) -> Admin | None:

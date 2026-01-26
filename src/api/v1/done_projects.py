@@ -11,7 +11,7 @@ from src.api.deps import (
     OptionalAdminDap,
 )
 from src.core.db.repositories.base import NoEntityByIdFound
-from src.core.enums import DoneProjectSortBy
+from src.core.sort_by_enums import DoneProjectSortBy
 from src.core.schemas import (
     ReadDoneProjectModel,
     ReadAllDoneProjectsModel,

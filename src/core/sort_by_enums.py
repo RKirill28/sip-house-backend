@@ -46,3 +46,7 @@ class MessageSortBy(SortBy):
 class ChatSortBy(SortBy):
     USERNAME = ("username", Chat.username)
     CHAT_ID = ("chat_id", Chat.chat_id)
+
+
+class AdminSortBy(SortBy):
+    pass
