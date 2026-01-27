@@ -1,5 +1,6 @@
 from uuid import UUID
 from fastapi import APIRouter, HTTPException
+from sqlalchemy.exc import IntegrityError
 
 from src.core.db.repositories.base import NoEntityByIdFound
 from src.core.schemas import (
@@ -19,12 +20,18 @@ images_router = APIRouter(prefix=settings.api.v1.images_prefix)
 async def create(image_repo: ImageRepoDap, create_image: CreateImageModel, _: AdminDap):
     if create_image.done_project_id and create_image.project_id:
         raise HTTPException(433, "You can specify either project_id or done_project_id")
-    new = await image_repo.create(create_image)
-    return new
+    elif create_image.done_project_id is None and create_image.project_id is None:
+        raise HTTPException(433, "Specify either project_id or done_project_id, one of the two required")
+    else:
+        try:
+            new = await image_repo.create(create_image)
+            return new
+        except IntegrityError:
+            raise HTTPException(404, "No done_project/project found by id")
 
 
 @images_router.put("/add_image_urls", response_model=list[ReadImageModel])
-async def add_image_ulrs(
+async def add_image_urls(
     image_repo: ImageRepoDap, update_model: list[UpdateImageUrlModel], _: AdminDap
 ):
     res = []
@@ -32,7 +39,7 @@ async def add_image_ulrs(
         try:
             res.append(await image_repo.update_image_url(model))
         except NoEntityByIdFound:
-            raise HTTPException(404, "No image found by id.")
+            raise HTTPException(404, "No image found by id")
 
     await image_repo.session.commit()
 
@@ -53,11 +60,11 @@ async def delete_by_id(
         if image.url:
             file_worker.remove(image.url)
         else:
-            HTTPException(404, "No image url found.")
+            HTTPException(404, "No image url found")
 
         return {"success": True}
     except NoEntityByIdFound:
-        raise HTTPException(404, "No image found by id.")
+        raise HTTPException(404, "No image found by id")
 
 
 @images_router.get("/{project_id}", response_model=list[ReadImageModel])

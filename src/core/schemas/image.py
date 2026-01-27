@@ -10,7 +10,7 @@ from src.core.schemas.base import MyBaseModel
 class CreateImageModel(MyBaseModel):
     """For API"""
 
-    project_id: UUID = Field(alias="projectId")
+    project_id: UUID|None = Field(default=None, alias="projectId")
     name: str = Field(max_length=32)
     description: str = Field(max_length=255)
     main_image: bool = Field(alias="mainImage")

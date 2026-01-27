@@ -52,5 +52,7 @@ class Settings(BaseSettings):
     UPLOADS_BASE_DIR: Path = BASE_DIR / "uploads"
     IMAGE_MAX_WIDTH: int = 600
 
+    TG_BOT_TOKEN: str
+
 
 settings = Settings()
