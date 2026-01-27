@@ -11,7 +11,6 @@ from src.api.deps import (
     OptionalAdminDap,
 )
 from src.core.db.repositories.base import NoEntityByIdFound
-from src.core.enums import DoneProjectSortBy
 from src.core.schemas import (
     ReadDoneProjectModel,
     ReadAllDoneProjectsModel,
@@ -24,7 +23,7 @@ done_projects_router = APIRouter(prefix=settings.api.v1.done_projects_prefix)
 
 @done_projects_router.post("", response_model=ReadDoneProjectModel)
 async def create(
-    project_repo: DoneProjectRepoDap, create_project: CreateDoneProjectModel
+    project_repo: DoneProjectRepoDap, create_project: CreateDoneProjectModel,
 ):
     new = await project_repo.create(create_project)
     await project_repo.session.commit()

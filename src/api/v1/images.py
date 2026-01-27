@@ -10,23 +10,26 @@ from src.core.schemas import (
 )
 from src.core.conifg import settings
 
-from src.api.deps import AdminDap, FileWorkerServiceDap, ImageRepoDap
+from src.api.deps import AdminDap, FileWorkerServiceDap, ImageRepoDap, DoneProjectRepoDap
 
 
 images_router = APIRouter(prefix=settings.api.v1.images_prefix)
 
 
 @images_router.post("", response_model=ReadImageModel)
-async def create(image_repo: ImageRepoDap, create_image: CreateImageModel, _: AdminDap):
+async def create(image_repo: ImageRepoDap, done_project_repo: DoneProjectRepoDap, create_image: CreateImageModel, ):
     if create_image.done_project_id and create_image.project_id:
         raise HTTPException(433, "You can specify either project_id or done_project_id")
     elif create_image.done_project_id is None and create_image.project_id is None:
         raise HTTPException(433, "Specify either project_id or done_project_id, one of the two required")
     else:
         try:
+            d_project = await done_project_repo.get_by_id(create_image.done_project_id)
+            print("D PROJECT", d_project.name)
             new = await image_repo.create(create_image)
             return new
-        except IntegrityError:
+        except IntegrityError as e:
+            print(e)
             raise HTTPException(404, "No done_project/project found by id")
 
 
