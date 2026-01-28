@@ -18,10 +18,10 @@ class Image(Base):
     main_image: Mapped[bool]
     sort: Mapped[int]
 
-    project_id: Mapped[UUID] = mapped_column(
-        MyUUID, ForeignKey("projects.id"), default=uuid4
+    project_id: Mapped[Optional[UUID]] = mapped_column(
+        MyUUID, ForeignKey("projects.id"), default=None
     )
-    project: Mapped["Project"] = relationship(
+    project: Mapped[Optional["Project"]] = relationship(
         back_populates="images",
     )
 

@@ -55,5 +55,7 @@ class Settings(BaseSettings):
     IMAGE_MAX_WIDTH: int = 600
     TG_BOT_TOKEN: str
 
+    TG_BOT_TOKEN: str
+
 
 settings = Settings()
