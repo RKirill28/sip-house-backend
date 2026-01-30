@@ -5,6 +5,7 @@ from fastapi import Depends, HTTPException, Header, Query
 import jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.services.tg import TelegramService
 from src.core.db.repositories import (
     ProjectRepository,
     ImageRepository,
@@ -89,6 +90,13 @@ AllDoneProjectParamsDap = Annotated[dict, Depends(get_params(DoneProjectSortBy))
 
 ValidatorServiceDap = Annotated[GeneralValidatorService, Depends(get_file_validator)]
 FileWorkerServiceDap = Annotated[FileWorkerService, Depends(get_file_worker)]
+
+
+def get_tg_service(chat_repo: ChatRepoDap) -> TelegramService:
+    return TelegramService(chat_repo)
+
+
+TelegramServiceDap = Annotated[TelegramService, Depends(get_tg_service)]
 
 
 def get_auth_service(admin_repo: AdminRepoDap) -> AuthService:

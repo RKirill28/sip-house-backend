@@ -17,7 +17,7 @@ from .done_project import (
     ReadAllDoneProjectsModel,
 )
 from .message import CreateMessageModel, ReadMessageModel, MessageModel
-from .chat import CreateChatModel, ReadChatModel, ChatModel
+from .chat import CreateChatModel, ReadChatModel
 from .admin import CreateAdmin, CreateAdminResponse, UpdateAdminToken, LoginAdmin
 
 
@@ -39,7 +39,6 @@ __all__ = [
     "CreateChatModel",
     "ReadChatModel",
     "MessageModel",
-    "ChatModel",
     "ReadAllProjectsModel",
     "CreateAdmin",
     "CreateAdminResponse",

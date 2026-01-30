@@ -24,12 +24,22 @@ class BaseRepository(Generic[T, P, S]):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def create(self, scheme: P) -> T:
-        new = self.model(**scheme.model_dump())
+    async def create(self, model: P) -> T:
+        new = self.model(**model.model_dump())
         self.session.add(new)
         await self.session.flush()
         await self.session.refresh(new)
         return new
+
+    async def create_all(self, models: list[P]) -> list[T]:
+        new_models = [self.model(**model.model_dump()) for model in models]
+        for i in new_models:
+            print(
+                'Save', i.chat_id
+            )
+        self.session.add_all(new_models)
+        # await self.session.flush()
+        return new_models
 
     async def get_by_id(self, id: UUID) -> T:
         res = await self.session.get(self.model, id)

@@ -1,11 +1,10 @@
-"""test fix: added default for done_project_id as uuid4
+"""new init
 
-Revision ID: a5665d9b433c
-Revises: 9fd21f310779
-Create Date: 2026-01-28 02:12:27.599145
+Revision ID: 2bdeadb3cfce
+Revises: 
+Create Date: 2026-01-30 20:38:12.219614
 
 """
-
 from typing import Sequence, Union
 
 from alembic import op
@@ -13,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "a5665d9b433c"
-down_revision: Union[str, Sequence[str], None] = "9fd21f310779"
+revision: str = '2bdeadb3cfce'
+down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

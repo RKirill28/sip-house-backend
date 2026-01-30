@@ -1,10 +1,9 @@
 from telegram import Bot
 
 from src.core.conifg import settings
-from src.core.db.models.chat import Chat
 from src.core.db.repositories import ChatRepository
-from src.core.schemas import CreateChatModel
-from src.core.schemas.message import CreateMessageModel, ReadMessageModel
+from src.core.schemas import CreateChatModel, MessageModel
+from src.core.db.models import Chat
 
 
 class TelegramService:
@@ -13,24 +12,26 @@ class TelegramService:
     """
 
     _instance = None
+    _bot = None
 
-    def __init__(self, chat_repo: ChatRepository):
-        self._bot = Bot(settings.TG_BOT_TOKEN)
-        self._chat_repo = chat_repo
-
-    def __new__(cls):
+    def __new__(cls, *args, **kwargs):
         if cls._instance is None:
-            cls._instance = super(TelegramService, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
+        if cls._bot is None:
+            cls._bot = Bot(settings.TG_BOT_TOKEN)
         return cls._instance
 
-    async def _get_chats(self) -> list[CreateChatModel]:
-        upds = await self._bot.get_updates()
-        chats = []
+    def __init__(self, chat_repo: ChatRepository):
+        self._chat_repo = chat_repo
 
-        for upd in upds:
-            chat = upd.effective_chat
-            if chat:
-                chats.append(CreateChatModel(chat_id=chat.id, username=chat.username))
+    async def _get_chats(self) -> set[CreateChatModel]:
+        updates = await self._bot.get_updates()
+        chats = set()
+        upd_chats = [upd.effective_chat for upd in updates]
+
+        for upd in upd_chats:
+            if upd:
+                chats.add(CreateChatModel(chat_id=upd.id, username=upd.username))
         return chats
 
     async def _get_new_chats(self) -> list[CreateChatModel]:
@@ -44,12 +45,18 @@ class TelegramService:
         return new_chats
 
     async def update_chat_list(self) -> list[Chat]:
-        new_chats = await self._get_new_chats()
-        return await self._chat_repo.add_all(new_chats)
-
-    async def send_messages(self, message: CreateMessageModel) -> None:
         """
-        Отпровляет сообщения во все чаты из БД.
+        Обновляет список чатов, если есть новые пользовтаеля бота
+        """
+        new_chats = await self._get_new_chats()
+        res = await self._chat_repo.create_all(new_chats)
+        await self._chat_repo.session.commit()
+        return res
+
+
+    async def send_messages(self, message: MessageModel) -> None:
+        """
+        Отправляет сообщения во все чаты из БД.
         """
         chats = await self._chat_repo.get_chats()
         _message = f"""

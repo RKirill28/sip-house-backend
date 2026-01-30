@@ -7,6 +7,7 @@ from src.api.v1.images import images_router
 from src.api.v1.files import files_router
 from src.api.v1.messages import mess_router
 from src.api.v1.auth import auth_router
+from src.api.v1.chats import chats_router
 
 
 api_v1_router = APIRouter(prefix=settings.api.v1.prefix)
@@ -14,5 +15,6 @@ api_v1_router.include_router(projects_router, tags=["Projects"])
 api_v1_router.include_router(done_projects_router, tags=["Done Projects"])
 api_v1_router.include_router(images_router, tags=["Images"])
 api_v1_router.include_router(mess_router, tags=["Messages"])
+api_v1_router.include_router(chats_router, tags=["Chats"])
 api_v1_router.include_router(files_router, tags=["Files"])
 api_v1_router.include_router(auth_router, tags=["Auth"])

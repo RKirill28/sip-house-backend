@@ -1,5 +1,4 @@
 from src.core.db.models import Chat
-from src.core.db.repositories.base import NoEntityByIdFound
 from src.core.sort_by_enums import ChatSortBy
 from src.core.schemas import CreateChatModel
 
@@ -14,6 +13,10 @@ class ChatRepository(BaseRepository[Chat, CreateChatModel, ChatSortBy]):
 
     async def get_chats(self) -> Sequence[Chat]:
         res = await self.session.execute(select(self.model))
+        return res.scalars().all()
+
+    async def get_chat_ids(self) -> Sequence[int]:
+        res = await self.session.execute(select(self.model.chat_id))
         return res.scalars().all()
 
     async def get_by_chat_id(self, chat_id: int) -> Chat | None:

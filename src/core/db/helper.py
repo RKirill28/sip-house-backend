@@ -1,6 +1,5 @@
 from typing import AsyncGenerator
 
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession

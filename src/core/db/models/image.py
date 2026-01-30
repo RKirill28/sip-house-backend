@@ -1,6 +1,6 @@
 from .base import Base
 
-from uuid import uuid4, UUID
+from uuid import UUID
 from typing import Optional
 
 from sqlalchemy import ForeignKey, String, Text

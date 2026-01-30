@@ -14,7 +14,6 @@ from src.api.deps import (
     AdminDap,
     FileWorkerServiceDap,
     ImageRepoDap,
-    DoneProjectRepoDap,
 )
 
 

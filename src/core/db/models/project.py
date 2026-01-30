@@ -1,6 +1,6 @@
 from . import Base
 
-from sqlalchemy import String, Text, DECIMAL, JSON
+from sqlalchemy import String, DECIMAL, JSON
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 
