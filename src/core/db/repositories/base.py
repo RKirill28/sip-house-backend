@@ -34,9 +34,7 @@ class BaseRepository(Generic[T, P, S]):
     async def create_all(self, models: list[P]) -> list[T]:
         new_models = [self.model(**model.model_dump()) for model in models]
         for i in new_models:
-            print(
-                'Save', i.chat_id
-            )
+            print("Save", i.chat_id)
         self.session.add_all(new_models)
         # await self.session.flush()
         return new_models

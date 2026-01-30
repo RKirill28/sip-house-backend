@@ -53,7 +53,6 @@ class TelegramService:
         await self._chat_repo.session.commit()
         return res
 
-
     async def send_messages(self, message: MessageModel) -> None:
         """
         Отправляет сообщения во все чаты из БД.
@@ -69,4 +68,7 @@ class TelegramService:
 💬 Комментарий: {message.comment}
         """
         for chat in chats:
-            await self._bot.send_message(chat.chat_id, _message, parse_mode="html")
+            try:
+                await self._bot.send_message(chat.chat_id, _message, parse_mode="html")
+            except Exception as e:
+                pass

@@ -1,5 +1,5 @@
 from uuid import UUID
-from fastapi import APIRouter, HTTPException, BackgroundTasks, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from src.core.db.repositories.base import NoEntityByIdFound
 from src.core.schemas import (
@@ -25,20 +25,19 @@ async def create(mess_repo: MessageRepoDap, create_mess: CreateMessageModel = Qu
 async def send(
     mess_repo: MessageRepoDap,
     tg_service: TelegramServiceDap,
-    bg_tasks: BackgroundTasks,
     message_id: UUID = Query(),
 ):
     try:
         mess = await mess_repo.get_by_id(message_id)
-        bg_tasks.add_task(
-            tg_service.send_messages,
-            message=MessageModel(
+        await tg_service.send_messages(
+            MessageModel(
                 username=mess.user_phone,
                 user_phone=mess.user_phone,
                 user_email=mess.user_email,
                 comment=mess.comment,
                 object_type=mess.object_type,
-            ),
+            )
         )
+        return {"success": True}
     except NoEntityByIdFound:
         raise HTTPException(404, "No message found by id.")
