@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):
     print("Shutdown app")
 
 
-app = FastAPI(lifespan=lifespan, docs_url='/docs_', redoc_url=None)
+app = FastAPI(lifespan=lifespan, docs_url="/docs_", redoc_url=None)
 app.include_router(main_router)
 
 if __name__ == "__main__":

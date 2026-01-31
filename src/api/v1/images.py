@@ -30,7 +30,13 @@ async def create(image_repo: ImageRepoDap, create_image: CreateImageModel, _: Ad
         )
     else:
         try:
+            if create_image.main_image:
+                curr_images = await image_repo.get_all_by_project_id(create_image.project_id)
+                for image in curr_images:
+                    image.main_image = False
+
             new = await image_repo.create(create_image)
+            await image_repo.session.commit()
             return new
         except IntegrityError:
             raise HTTPException(404, "No done_project/project found by id")
@@ -48,7 +54,6 @@ async def add_image_urls(
             raise HTTPException(404, "No image found by id")
 
     await image_repo.session.commit()
-
     return res
 
 

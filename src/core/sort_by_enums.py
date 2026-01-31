@@ -37,7 +37,6 @@ class DoneProjectSortBy(SortBy):
 
 class MessageSortBy(SortBy):
     CREATED_AT = ("created_at", Message.created_at)
-    USERNAME = ("username", Message.username)
     USER_PHONE = ("user_phone", Message.user_phone)
     USER_EMAIL = ("user_email", Message.user_email)
     COMMENT = ("comment", Message.comment)

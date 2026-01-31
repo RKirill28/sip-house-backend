@@ -18,7 +18,6 @@ class Message(Base):
         server_default=sqlalchemy.func.now(),
         server_onupdate=sqlalchemy.func.now(),
     )
-    username: Mapped[str | None] = mapped_column(VARCHAR(32), default=None)
     user_phone: Mapped[str] = mapped_column(VARCHAR(20))
     user_email: Mapped[str] = mapped_column(VARCHAR(100))
     object_type: Mapped[ObjectType]
