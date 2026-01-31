@@ -22,7 +22,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan, docs_url="/docs_", redoc_url=None)
-app.include_router(main_router)
+
 origins = [
     "http://localhost",
     "http://localhost:4200",
@@ -36,6 +36,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(main_router)
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host=settings.run.host, port=settings.run.port, reload=True)
