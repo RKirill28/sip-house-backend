@@ -31,7 +31,7 @@ async def send(
         mess = await mess_repo.get_by_id(message_id)
         await tg_service.send_messages(
             MessageModel(
-                username=mess.user_phone,
+                user_name=mess.user_phone,
                 user_phone=mess.user_phone,
                 user_email=mess.user_email,
                 comment=mess.comment,

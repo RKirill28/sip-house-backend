@@ -59,6 +59,8 @@ class TelegramService:
         """
         chats = await self._chat_repo.get_chats()
         _message = f"""
+👤 Имя: {message.user_name}
+
 📞 Телефон: {message.user_phone}
 
 📧 Почта: {message.user_email}
