@@ -1,5 +1,6 @@
+from typing import Annotated
 from uuid import UUID
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from src.core.conifg import settings
 from src.core.db.repositories.base import NoEntityByIdFound

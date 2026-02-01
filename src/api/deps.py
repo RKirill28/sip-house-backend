@@ -1,8 +1,9 @@
+import jwt
+
 from typing import Annotated, Type, TypeVar
 from uuid import UUID
 
 from fastapi import Depends, HTTPException, Header, Query
-import jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.services.tg import TelegramService
@@ -86,7 +87,6 @@ AdminRepoDap = Annotated[AdminRepository, Depends(get_admin_repo)]
 
 AllProjectParamsDap = Annotated[dict, Depends(get_params(ProjectSortBy))]
 AllDoneProjectParamsDap = Annotated[dict, Depends(get_params(DoneProjectSortBy))]
-
 
 ValidatorServiceDap = Annotated[GeneralValidatorService, Depends(get_file_validator)]
 FileWorkerServiceDap = Annotated[FileWorkerService, Depends(get_file_worker)]

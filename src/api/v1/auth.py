@@ -15,7 +15,6 @@ from src.services.auth import (
 
 auth_router = APIRouter(prefix=settings.api.v1.auth_prefix)
 
-
 # TODO: service login.py and use login() func for reg and login
 
 
