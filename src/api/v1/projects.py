@@ -2,7 +2,6 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException, Query
 
 from src.core.conifg import settings
-from src.core.db.repositories.base import NoEntityByIdFound
 from src.core.schemas import (
     CreateProjectModel,
     ReadProjectModel,
@@ -18,6 +17,8 @@ from src.api.deps import (
     ProjectRepoDap,
 )
 from src.core.schemas import ReadAllProjectsModel
+
+from src.infra.db.repositories.base import NoEntityByIdFound
 
 
 projects_router = APIRouter(prefix=settings.api.v1.projects_prefix)

@@ -1,11 +1,10 @@
 from enum import Enum
 
-from src.core.db.models.done_project import DoneProject
-from src.core.db.models.image import Image
-
-from src.core.db.models.project import Project
-from src.core.db.models.message import Message
-from src.core.db.models.chat import Chat
+from src.infra.db.models.done_project import DoneProject
+from src.infra.db.models.image import Image
+from src.infra.db.models.project import Project
+from src.infra.db.models.message import Message
+from src.infra.db.models.chat import Chat
 
 
 class SortBy(Enum):

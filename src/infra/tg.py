@@ -1,9 +1,10 @@
 from telegram import Bot
 
-from src.core.conifg import settings
-from src.core.db.repositories import ChatRepository
+from src.infra.db.repositories import ChatRepository
+from src.infra.db.models import Chat
+
 from src.core.schemas import CreateChatModel, MessageModel
-from src.core.db.models import Chat
+from src.core.conifg import settings
 
 
 class TelegramService:
@@ -12,13 +13,13 @@ class TelegramService:
     """
 
     _instance = None
-    _bot = None
+    _bot: Bot = None  # type: ignore
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
         if cls._bot is None:
-            cls._bot = Bot(settings.TG_BOT_TOKEN)
+            cls._bot: Bot = Bot(settings.TG_BOT_TOKEN)
         return cls._instance
 
     def __init__(self, chat_repo: ChatRepository):
@@ -72,5 +73,6 @@ class TelegramService:
         for chat in chats:
             try:
                 await self._bot.send_message(chat.chat_id, _message, parse_mode="html")
-            except Exception as e:
+            # WARN: handle exception pls ,-,
+            except Exception:
                 pass

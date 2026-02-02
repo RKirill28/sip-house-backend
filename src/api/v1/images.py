@@ -2,7 +2,7 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
 
-from src.core.db.repositories.base import NoEntityByIdFound
+from src.infra.db.repositories.base import NoEntityByIdFound
 from src.core.schemas import (
     CreateImageModel,
     ReadImageModel,
@@ -31,7 +31,9 @@ async def create(image_repo: ImageRepoDap, create_image: CreateImageModel, _: Ad
     else:
         try:
             if create_image.main_image:
-                curr_images = await image_repo.get_all_by_project_id(create_image.project_id)
+                curr_images = await image_repo.get_all_by_project_id(
+                    create_image.project_id
+                )
                 for image in curr_images:
                     image.main_image = False
 

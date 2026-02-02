@@ -1,6 +1,6 @@
 from src.core.sort_by_enums import MessageSortBy
 from src.core.schemas import CreateMessageModel
-from src.core.db.models import Message
+from src.infra.db.models import Message
 
 from . import BaseRepository
 

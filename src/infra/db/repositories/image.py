@@ -6,7 +6,7 @@ from uuid import UUID
 
 from src.core.sort_by_enums import ImageSortBy
 from src.core.schemas import CreateImageModel, UpdateImageUrlModel
-from src.core.db.models import Image
+from src.infra.db.models import Image
 
 from . import BaseRepository
 

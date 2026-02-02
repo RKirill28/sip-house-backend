@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from starlette.middleware.cors import CORSMiddleware
 
 from src.core.conifg import settings
-from src.core.db.helper import create_all
+from src.infra.db.helper import create_all
 from src.api import main_router
 
 app = FastAPI()
@@ -29,7 +29,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

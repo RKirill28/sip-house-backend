@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select, desc
 
-from src.core.db.models import Base
+from src.infra.db.models import Base
 from src.core.sort_by_enums import SortBy
 from src.core.schemas.base import MyBaseModel
 

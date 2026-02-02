@@ -1,5 +1,5 @@
-from src.core.db.repositories import BaseRepository
-from src.core.db.models import DoneProject
+from src.infra.db.repositories import BaseRepository
+from src.infra.db.models import DoneProject
 from src.core.sort_by_enums import DoneProjectSortBy
 from src.core.schemas import CreateDoneProjectModel
 

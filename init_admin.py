@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
 from src.core.conifg import settings
-from src.core.db.models import Base, Admin
+from src.infra.db.models import Base, Admin
 from src.services.hasher import Hasher
 
 

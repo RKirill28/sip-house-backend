@@ -6,7 +6,7 @@ from typing import Optional
 from sqlalchemy import ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
-from src.core.db.models.base import MyUUID
+from src.infra.db.models.base import MyUUID
 
 
 class Image(Base):

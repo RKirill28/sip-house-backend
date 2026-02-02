@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from src.core.db.repositories.admin import AdminRepository
+from src.infra.db.repositories.admin import AdminRepository
 from src.services.hasher import Hasher
 
 

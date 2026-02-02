@@ -1,4 +1,4 @@
-from src.core.db.models import Chat
+from src.infra.db.models import Chat
 from src.core.sort_by_enums import ChatSortBy
 from src.core.schemas import CreateChatModel
 

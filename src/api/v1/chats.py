@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from src.core.schemas import ReadChatModel
 from src.core.conifg import settings
+
 from src.api.deps import TelegramServiceDap
 
 chats_router = APIRouter(prefix=settings.api.v1.chats_prefix)

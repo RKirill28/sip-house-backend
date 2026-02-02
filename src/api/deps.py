@@ -2,25 +2,27 @@ from typing import Annotated, Type, TypeVar
 from uuid import UUID
 
 from fastapi import Depends, HTTPException, Header, Query
-import jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.services.tg import TelegramService
-from src.core.db.repositories import (
+from src.infra.db.repositories import (
     ProjectRepository,
     ImageRepository,
     DoneProjectRepository,
     ChatRepository,
+    MessageRepository,
+    AdminRepository,
 )
-from src.core.db.helper import get_session
-from src.core.db.repositories.message import MessageRepository
+from src.infra.db.helper import get_session
+
 from src.core.sort_by_enums import DoneProjectSortBy, ProjectSortBy, SortBy
-from src.core.db.repositories.admin import AdminRepository
 from src.core.conifg import settings
+
+from src.infra.tg import TelegramService
 from src.services import FileWorkerService, ImageCompressor, GeneralValidatorService
 from src.services.auth import AuthService
 from src.services.token_service import JWTToken
 
+import jwt
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
 

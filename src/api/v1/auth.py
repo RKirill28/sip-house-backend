@@ -2,12 +2,14 @@ import uuid
 
 from fastapi import APIRouter, HTTPException
 
-from src.services.token_service import AccessToken, JWTToken
-from src.core.schemas import LoginAdmin, UpdateAdminToken
-from src.core.db.repositories import AdminRepository
+from src.infra.db.repositories import AdminRepository
+
 from src.core.conifg import settings
+from src.core.schemas import LoginAdmin, UpdateAdminToken
+
 from src.api.deps import AdminDap, AdminRepoDap, AuthServiceDap
 
+from src.services.token_service import AccessToken, JWTToken
 from src.services.auth import (
     InvalidCredentials,
 )

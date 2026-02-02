@@ -1,7 +1,6 @@
 from uuid import UUID
 from fastapi import APIRouter, HTTPException, Query
 
-from src.core.conifg import settings
 
 from src.api.deps import (
     AdminDap,
@@ -10,7 +9,10 @@ from src.api.deps import (
     FileWorkerServiceDap,
     OptionalAdminDap,
 )
-from src.core.db.repositories.base import NoEntityByIdFound
+
+from src.infra.db.repositories.base import NoEntityByIdFound
+
+from src.core.conifg import settings
 from src.core.schemas import (
     ReadDoneProjectModel,
     ReadAllDoneProjectsModel,

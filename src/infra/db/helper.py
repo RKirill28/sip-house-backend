@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
 from src.core.conifg import settings
-from src.core.db.models import Base, Admin
+from src.infra.db.models import Base, Admin
 from src.services.hasher import Hasher
 
 

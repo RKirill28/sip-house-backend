@@ -1,13 +1,15 @@
 from uuid import UUID
 from fastapi import APIRouter, HTTPException, Query
 
-from src.core.db.repositories.base import NoEntityByIdFound
+from src.infra.db.repositories.base import NoEntityByIdFound
+
 from src.core.schemas import (
     CreateMessageModel,
     ReadMessageModel,
     MessageModel,
 )
 from src.core.conifg import settings
+
 from src.api.deps import MessageRepoDap
 from src.api.deps import TelegramServiceDap
 

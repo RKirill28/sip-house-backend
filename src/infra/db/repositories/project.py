@@ -3,8 +3,8 @@ from src.core.schemas import (
     CreateProjectModel,
     UpdateProjectPdfUrlModel,
 )
-from src.core.db.repositories import BaseRepository
-from src.core.db.models import Project
+from src.infra.db.repositories import BaseRepository
+from src.infra.db.models import Project
 
 
 class ProjectRepository(BaseRepository[Project, CreateProjectModel, ProjectSortBy]):
