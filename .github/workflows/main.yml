@@ -5,36 +5,36 @@ on:
     branches: [master, main]
   workflow_dispatch
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-#
-#       - name: Deploy using SCP
-#         uses: appleboy/scp-action@v1
-#         with:
-#           host: ${{ secrets.REMOTE_HOST }}
-#           username: ${{ secrets.REMOTE_USER }}
-#           key: ${{ secrets.SSH_KEY }}
-#           source: "./*"
-#           rm: false
-#           target: "/var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/api"
-#
-#       - name: Post-deploy commands (Cleanup & Restart)
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.REMOTE_HOST }}
-#           username: ${{ secrets.REMOTE_USER }}
-#           key: ${{ secrets.SSH_KEY }}
-#           script: |
-#             cd /var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/
-#             source .venv/bin/activate
-#             cd api/
-#             pip install -e .
-#             alembic upgrade head
-#             python init_admin.py
-#
-#             touch .restart-app
-#             echo "Deploy finished successfully"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy using SCP
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "./*"
+          rm: false
+          target: "/var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/api"
+
+      - name: Post-deploy commands (Cleanup & Restart)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/u3363751/data/www/xn--42-vlceyfhfck.xn--p1ai/
+            source .venv/bin/activate
+            cd api/
+            pip install -e .
+            alembic upgrade head
+            python init_admin.py
+
+            touch .restart-app
+            echo "Deploy finished successfully"
