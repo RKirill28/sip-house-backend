@@ -18,7 +18,7 @@ mess_router = APIRouter(prefix=settings.api.v1.messages_prefix)
 
 
 @mess_router.post("", response_model=ReadMessageModel)
-async def create(mess_repo: MessageRepoDap, create_mess: CreateMessageModel = Query()):
+async def create(mess_repo: MessageRepoDap, create_mess: CreateMessageModel):
     new = await mess_repo.create(create_mess)
     return new
 
