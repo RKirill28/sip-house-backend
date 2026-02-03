@@ -99,5 +99,3 @@ alembic downgrade <head_version_id>
 ```bash
 alembic merge -m "merge main and work heads" head1_id head2_id
 ```
-
-d
