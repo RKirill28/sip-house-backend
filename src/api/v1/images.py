@@ -6,6 +6,7 @@ from src.infra.db.repositories.base import NoEntityByIdFound
 from src.core.schemas import (
     CreateImageModel,
     ReadImageModel,
+    UpdateImageModel,
     UpdateImageUrlModel,
 )
 from src.core.conifg import settings
@@ -83,3 +84,31 @@ async def delete_by_id(
 @images_router.get("/{project_id}", response_model=list[ReadImageModel])
 async def get_by_project_id(image_repo: ImageRepoDap, project_id: UUID):
     return await image_repo.get_all_by_project_id(project_id)
+
+
+@images_router.put("/{image_id}")
+async def update(
+    image_repo: ImageRepoDap,
+    image_id: UUID,
+    update_model: UpdateImageModel,
+    _: AdminDap,
+):
+    try:
+        image = await image_repo.get_by_id(image_id)
+    except NoEntityByIdFound:
+        raise HTTPException(404, "No image found by id")
+
+    if image.main_image:
+        if image.project_id is not None:
+            images = await image_repo.get_all_by_project_id(image.project_id)
+        elif image.done_project_id is not None:
+            images = await image_repo.get_all_by_done_project_id(image.done_project_id)
+        else:
+            raise HTTPException(404, "No project_id or done_project_id")
+
+        for db_img in images:
+            db_img.main_image = False
+
+    await image_repo.update(image_id, update_model)
+    await image_repo.session.commit()
+    return {"success": True}

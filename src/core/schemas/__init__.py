@@ -10,6 +10,7 @@ from .image import (
     CreateImageInDBModel,
     ReadImageModel,
     UpdateImageUrlModel,
+    UpdateImageModel,
 )
 from .done_project import (
     CreateDoneProjectModel,
@@ -44,4 +45,5 @@ __all__ = [
     "CreateAdminResponse",
     "UpdateAdminToken",
     "LoginAdmin",
+    "UpdateImageModel",
 ]

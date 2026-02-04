@@ -36,3 +36,8 @@ class ReadImageModel(CreateImageModel):
 class UpdateImageUrlModel(MyBaseModel):
     id: UUID
     url: str
+
+
+class UpdateImageModel(MyBaseModel):
+    name: str | None = Field(max_length=32)
+    main_image: bool = Field(alias="mainImage")

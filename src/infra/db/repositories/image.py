@@ -20,6 +20,14 @@ class ImageRepository(BaseRepository[Image, CreateImageModel, ImageSortBy]):
         )
         return res.scalars().all()
 
+    async def get_all_by_done_project_id(
+        self, done_project_id: UUID
+    ) -> Sequence[Image]:
+        res = await self.session.execute(
+            select(Image).where(Image.done_project_id == done_project_id)
+        )
+        return res.scalars().all()
+
     async def update_image_url(self, update_image_url: UpdateImageUrlModel) -> Image:
         image_obj = await self.get_by_id(update_image_url.id)
         image_obj.url = update_image_url.url
