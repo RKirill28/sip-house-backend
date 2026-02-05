@@ -31,6 +31,7 @@ async def create(image_repo: ImageRepoDap, create_image: CreateImageModel, _: Ad
         )
     else:
         try:
+            # TODO: MAKE GET ALL BY DONE PROJECT ID!!!
             if create_image.main_image:
                 curr_images = await image_repo.get_all_by_project_id(
                     create_image.project_id
@@ -91,14 +92,14 @@ async def update(
     image_repo: ImageRepoDap,
     image_id: UUID,
     update_model: UpdateImageModel,
-    _: AdminDap,
+    # _: AdminDap,
 ):
     try:
         image = await image_repo.get_by_id(image_id)
     except NoEntityByIdFound:
         raise HTTPException(404, "No image found by id")
 
-    if image.main_image:
+    if update_model.main_image:
         if image.project_id is not None:
             images = await image_repo.get_all_by_project_id(image.project_id)
         elif image.done_project_id is not None:
