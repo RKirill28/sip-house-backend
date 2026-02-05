@@ -39,11 +39,11 @@ async def create(
 async def get_all(
     project_repo: ProjectRepoDap,
     params: AllProjectParamsDap,
-    # admin_dap: OptionalAdminDap,
+    admin_dap: OptionalAdminDap,
 ):
     filters = {}
-    # if not admin_dap:
-    #     filters["public"] = True
+    if not admin_dap:
+        filters["public"] = True
 
     projects, count = await project_repo.get_all(
         params["offset"],
