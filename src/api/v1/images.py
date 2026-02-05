@@ -92,7 +92,7 @@ async def update(
     image_repo: ImageRepoDap,
     image_id: UUID,
     update_model: UpdateImageModel,
-    _: AdminDap,
+    # _: AdminDap,
 ):
     try:
         image = await image_repo.get_by_id(image_id)
