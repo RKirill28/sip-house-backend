@@ -109,6 +109,8 @@ async def update(
         for db_img in images:
             db_img.main_image = False
 
+        image.main_image = True
+
     await image_repo.update(image_id, update_model)
     await image_repo.session.commit()
     return {"success": True}
