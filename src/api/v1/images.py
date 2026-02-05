@@ -107,9 +107,9 @@ async def update(
             raise HTTPException(404, "No project_id or done_project_id")
 
         for db_img in images:
+            if db_img.id == image_id:
+                continue
             db_img.main_image = False
-
-        image.main_image = True
 
     await image_repo.update(image_id, update_model)
     await image_repo.session.commit()
