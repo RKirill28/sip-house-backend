@@ -39,7 +39,7 @@ This is a FastAPI-based backend for a SIP house construction company, designed t
     This project uses Python 3.13. It's recommended to use a virtual environment.
 
     ```bash
-    python3.13 -m venv .venv
+    python3.10 -m venv .venv
     source .venv/bin/activate
     ```
 
@@ -99,4 +99,3 @@ The application exposes a set of RESTful API endpoints for managing various reso
 - **/files/**: Endpoints for general file operations, likely related to uploads.
 
 Detailed API documentation can be found at `/docs` or `/redoc` when the application is running.
-

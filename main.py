@@ -16,7 +16,7 @@ app = FastAPI()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Startup app")
-    # create_all()
+    create_all()
     yield
     print("Shutdown app")
 
