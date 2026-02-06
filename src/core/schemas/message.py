@@ -12,7 +12,7 @@ class CreateMessageModel(MyBaseModel):
     user_phone: str = Field(max_length=20, alias="phone")
     user_email: str | None = Field(default=None, max_length=100, alias="email")
     object_type: ObjectType = Field(alias="objectType")
-    comment: str = Field(max_length=255)
+    comment: str | None = Field(default=None, max_length=255)
 
 
 class MessageModel(MyBaseModel):
@@ -20,7 +20,7 @@ class MessageModel(MyBaseModel):
     user_phone: str = Field(max_length=20)
     user_email: str | None = Field(default=None, max_length=100)
     object_type: ObjectType
-    comment: str = Field(max_length=255)
+    comment: str | None = Field(default=None, max_length=255)
 
 
 class ReadMessageModel(CreateMessageModel):

@@ -22,4 +22,4 @@ class Message(Base):
     user_phone: Mapped[str] = mapped_column(VARCHAR(20))
     user_email: Mapped[str | None] = mapped_column(VARCHAR(100), default=None)
     object_type: Mapped[ObjectType]
-    comment: Mapped[str] = mapped_column(VARCHAR(255))
+    comment: Mapped[str | None] = mapped_column(VARCHAR(255), default=None)
