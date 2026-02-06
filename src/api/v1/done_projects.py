@@ -82,9 +82,6 @@ async def delete(
     _: AdminDap,
 ):
     try:
-        await project_repo.remove(done_project_id)
-        await project_repo.session.commit()
-
         project = await project_repo.get_by_id(done_project_id)
         image_files: list[str] = [image.url for image in project.images]
         await project_repo.remove(done_project_id)
