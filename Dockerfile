@@ -8,4 +8,3 @@ COPY . .
 
 RUN pip install -e .
 
-ENTRYPOINT ["./entrypoint.sh"]
