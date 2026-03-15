@@ -3,7 +3,25 @@ services:
     image: mysql
     restart: always
     ports:
-      - "3306:3306"
+      - "${DB__PORT}:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sip-house
+      MYSQL_ROOT_PASSWORD: ${DB__PASSWORD}
+      MYSQL_DATABASE: ${DB__NAME}
+      MYSQL_HOST: ${DB__HOST}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB__PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    image: roca26/sip-house-backend:latest
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "alembic upgrade head && python init_admin.py && python main.py"

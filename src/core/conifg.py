@@ -9,6 +9,11 @@ class DatabaseConfig(BaseModel):
     async_url: MySQLDsn
     sync_url: MySQLDsn
 
+    password: str
+    host: str
+    name: str
+    port: int
+
     echo: bool
     echo_pool: bool
 

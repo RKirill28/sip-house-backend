@@ -1,0 +1,20 @@
+# Скрытые папки Git и настройки
+.git
+.gitignore
+
+# Виртуальные окружения
+.venv
+venv
+env
+__pycache__
+
+# Менеджеры зависимостей и логи
+uv.lock
+*.log
+plan.md
+README.md
+clean_arc.md
+
+# Docker специфичные файлы
+Dockerfile
+.dockerignore

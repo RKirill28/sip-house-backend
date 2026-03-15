@@ -1,11 +1,9 @@
 FROM python:3.10
 
-WORKDIR ./
+WORKDIR /app
 
-COPY requirements.txt ./
+COPY . .
 
-RUN pip install -r requirements.txt
+RUN pip install -e .
 
-COPY ..
-
-CMD ['fastapi', 'run']
+CMD ["python", "main.py"]
